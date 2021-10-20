@@ -1,0 +1,425 @@
+.panel.theme--ee5 {
+    background-color: #fff;
+    padding: 15px;
+    border: 1px solid #ccc;
+    overflow: auto;
+}
+
+.panel.theme--ee5 .button--secondary {
+    background-color: #247aa2;
+}
+
+.panel.theme--ee5 .panel-heading {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.panel.theme--ee5 .panel-heading .title-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panel.theme--ee5 .panel-intro {
+    color: gray;
+    display: block;
+    font-size: 12px;
+    font-style: normal;
+    margin-top: 2px;
+}
+
+.c-upload-image {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.upload-image__preview {
+    max-width: 300px;
+    border: 1px solid #000;
+    margin-bottom: 15px;
+}
+
+.audit__status-item {
+    padding: 5px;
+    border: 1px solid #252634;
+    min-width: 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    background-color: #f7f7fb;
+    position: relative;
+}
+
+.audit__status-item::before {
+    content: 'No ' attr(data-name) ' added';
+    position: absolute;
+    left: -1px;
+    white-space: nowrap;
+    bottom: 50%;
+    background-color: white;
+    padding: 5px;
+    border-radius: 3px;
+    opacity: 0;
+    pointer-events: none;
+    border: 1px solid #252634;
+    z-index: 100;
+    transition: ease 300ms;
+    transition-property: bottom, opacity;
+}
+
+.audit__status-item:hover::before {
+    bottom: 100%;
+    opacity: 1;
+}
+
+.audit__status-item.is--full {
+    background-color: #ceffdd;
+}
+
+.audit__status-item.is--full::before {
+    content: attr(data-name) ' added';
+}
+
+.pagination {
+    width: 100%;
+}
+
+.pagination .filter-bar {
+    display: none;
+}
+
+.audit__buttons {
+    text-align: right;
+}
+
+.audit__id {
+    white-space: nowrap;
+}
+
+.audit__language {
+    padding: 5px;
+    border: 1px solid;
+    border-radius: 3px;
+    margin-left: 5px;
+}
+
+.audit__status-item {
+    padding: 5px;
+    border: 1px solid #252634;
+    min-width: 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    background-color: #f7f7fb;
+    position: relative;
+}
+
+.audit__status-item::before {
+    content: 'No ' attr(data-name) ' added';
+    position: absolute;
+    left: -1px;
+    white-space: nowrap;
+    bottom: 50%;
+    background-color: white;
+    padding: 5px;
+    border-radius: 3px;
+    opacity: 0;
+    pointer-events: none;
+    border: 1px solid #252634;
+    z-index: 100;
+    transition: ease 300ms;
+    transition-property: bottom, opacity;
+}
+
+.audit__status-item:hover::before {
+    bottom: 100%;
+    opacity: 1;
+}
+
+.audit__status-item.is--full {
+    background-color: #ceffdd;
+}
+
+.audit__status-item.is--full::before {
+    content: attr(data-name) ' added';
+}
+
+.button__icon {
+    margin-left: 5px;
+}
+
+.title-bar__extra-tools {
+    margin-bottom: 0;
+}
+
+.panel-inner {
+    border-bottom: 1px solid #dfe0ef;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.panel-inner:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.panel-intro {
+    font-size: 14px;
+    color: #8f90b0;
+}
+
+.c-google-audit {
+    display: flex;
+    flex-direction: column;
+    max-width: 524px;
+    border: 1px solid #dfe0ef;
+    border-radius: 6px;
+    padding: 15px 0;
+}
+
+.google-audit__link,
+.google-audit__heading,
+.google-audit__description {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.google-audit__link {
+    font-size: 14px;
+    line-height: 1.3;
+}
+
+.google-audit__heading {
+    color: #1a0dab;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 26px;
+    padding-top: 5px;
+    margin-bottom: 3px;
+    position: relative;
+}
+
+.google-audit__description {
+    font-size: 14px;
+    min-height: 20px;
+    line-height: 1.3;
+    position: relative;
+}
+
+.c-facebook-audit {
+    display: flex;
+    flex-direction: column;
+    max-width: 524px;
+    border: 1px solid #dfe0ef;
+    border-radius: 6px;
+    background-color: #f7f7fb;
+}
+
+.facebook-audit__image-src {
+    height: 274px;
+    width: 100%;
+    border-radius: 6px 6px 0 0;
+    object-fit: cover;
+}
+
+.facebook-audit__link {
+    color: #606770;
+    font-size: 12px;
+    line-height: 11px;
+    text-transform: uppercase;
+}
+
+.facebook-audit__description {
+    color: #606770;
+    font-size: 14px;
+    line-height: 20px;
+    max-height: 80px;
+    position: relative;
+}
+
+.facebook-audit__description-inner {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    -webkit-line-clamp: 1;
+}
+
+.facebook-audit__image {
+    position: relative;
+}
+
+.facebook-audit__body {
+    padding: 10px 0;
+}
+
+.facebook-audit__heading {
+    font-weight: 600;
+    overflow: hidden;
+    font-size: 16px;
+    line-height: 20px;
+    margin: 3px 0 0;
+    padding-top: 2px;
+}
+
+.facebook-audit__link,
+.facebook-audit__heading,
+.facebook-audit__description {
+    padding-left: 12px;
+    padding-right: 12px;
+
+}
+
+.c-twitter-audit {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    max-width: 438px;
+    border: 1px solid #dfe0ef;
+    border-radius: 12px;
+    background-color: #ffffff;
+}
+
+.c-twitter-audit.type--0 .twitter-audit__image,
+.c-twitter-audit.type--2 .twitter-audit__image {
+    height: 125px;
+    position: static;
+}
+
+.c-twitter-audit.type--0 .twitter-audit__image-src,
+.c-twitter-audit.type--2 .twitter-audit__image-src {
+    border-radius: 12px 0 0 12px;
+    height: 125px;
+    width: 125px;
+    min-width: 125px;
+}
+
+.c-twitter-audit.type--0 .twitter-audit__body,
+.c-twitter-audit.type--2 .twitter-audit__body {
+    width: calc(100% - 125px);
+}
+
+.c-twitter-audit.type--0,
+.c-twitter-audit.type--2  {
+    flex-direction: row;
+}
+
+.twitter-audit__image-src {
+    height: 220px;
+    width: 100%;
+    border-radius: 12px 12px 0 0;
+    object-fit: cover;
+}
+
+.twitter-audit__link {
+    color: #606770;
+    font-size: 14px;
+    margin-top: 5px;
+    color: #8899A6;
+    line-height: 11px;
+}
+
+.twitter-audit__description {
+    color: #606770;
+    font-size: 14px;
+    line-height: 10px 18px;
+    max-height: 80px;
+    position: relative;
+}
+
+.twitter-audit__description-inner {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    -webkit-line-clamp: 1;
+}
+
+.twitter-audit__image {
+    position: relative;
+}
+
+.twitter-audit__body {
+    padding: 10px 0;
+    width: 100%;
+}
+
+.twitter-audit__heading {
+    font-weight: 600;
+    overflow: hidden;
+    font-size: 16px;
+    line-height: 20px;
+    margin: 3px 0 0;
+    padding-top: 2px;
+}
+
+.twitter-audit__heading,
+.twitter-audit__description,
+.twitter-audit__link {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.has--info::before {
+    content: '';
+    left: calc(100% + 22px);
+    bottom: 7px;
+    width: 5px;
+    height: 5px;
+    background-color: #fff;
+    display: block;
+    position: absolute;
+    z-index: 1;
+    border-radius: 100px;
+}
+
+.has--info::after {
+    content: attr(data-info);
+    line-height: 1;
+    position: absolute;
+    background-color: #e0e2fc;
+    border-radius: 10px 3px 3px 10px;
+    font-size: 10px;
+    left: calc(100% + 15px);
+    padding: 5px 10px 5px 20px;
+    color: #000;
+    white-space: nowrap;
+    bottom: 0;
+}
+.info--error::after {
+    background-color: #ffadad;
+}
+.info--success::after {
+    background-color: #ceffdd;
+}
+.info--warning::after {
+    background-color: #ffd7ba;
+}
+
+.c-languages {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: -15px;
+}
+
+.languages__language {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-bottom: 0;
+    background-color: #fff;
+}
+
+.languages__language.is--active {
+    font-weight: bold;
+    margin-bottom: -1px;
+}
+
+.languages__language:last-child {
+    margin-right: 0;
+}
