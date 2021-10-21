@@ -16,8 +16,8 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  * @package     ExpressionEngine
  * @subpackage  Addons
  * @category    Extension
- * @author      Bjørn Børresen
- * @link        http://wedoaddons.com
+ * @author      0to9 Digital - Robin Treur
+ * @link        https://0to9.nl
  */
 
 class Seo_lite_publisher_ext {

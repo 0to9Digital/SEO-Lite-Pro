@@ -6,7 +6,7 @@
  * @category   Module
  * @package    ExpressionEngine
  * @subpackage Addons
- * @author     0to9 Creative Impact Agency - Robin Treur
+ * @author     0to9 Digital - Robin Treur
  * @link       https://0to9.nl
  */
 

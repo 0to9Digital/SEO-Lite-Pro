@@ -1,16 +1,16 @@
 <?php
 
 if (!defined('SEOLITE_PUBLISHER_VERSION')) {
-    define('SEOLITE_PUBLISHER_VERSION', '2.0.0');
+    define('SEOLITE_PUBLISHER_VERSION', '2.0.1');
 }
 
 return [
-    'author'      => 'Weedoo',
-    'author_url'  => 'http://wedoaddons.com',
+    'author'      => '0to9 Digital',
+    'author_url'  => 'https://0to9.nl',
     'docs_url'    => '',
-    'name'        => 'SEO Lite for Publisher',
-    'description' => 'SEO Lite + Publisher extension',
+    'name'        => 'SEO Lite (v2) for Publisher',
+    'description' => 'SEO Lite (v2) + Publisher extension',
     'version'     => SEOLITE_PUBLISHER_VERSION,
-    'namespace'   => 'Weedoo\SeoLite',
+    'namespace'   => '0to9\SEO-Lite-2',
     'settings_exist' => false,
 ];

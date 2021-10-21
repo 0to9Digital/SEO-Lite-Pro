@@ -6,7 +6,7 @@
  * @category   Module
  * @package    ExpressionEngine
  * @subpackage Addons
- * @author     0to9 Creative Impact Agency - Robin Treur
+ * @author     0to9 Digital - Robin Treur
  * @link       https://0to9.nl
  */
 class Seo_lite_mcp 
@@ -20,7 +20,7 @@ class Seo_lite_mcp
         // uncomment this if you want navigation buttons at the top
 		ee()->cp->set_right_nav(array(
 				'settings'			=> $this->base,
-				'docs'	=> 'http://ee.bybjorn.com/seo_lite',
+				'docs'	=> 'https://github.com/0to9Digital/SEO-Lite-v2',
 			));
 
 
