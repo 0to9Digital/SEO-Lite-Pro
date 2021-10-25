@@ -260,12 +260,14 @@ class Seo_lite {
 
         if(!$got_values)
         {
-            $twitter_image = ee('Model')->get('File', $this->get_preferred_value($default_twitter_image, $seolite_entry->default_twitter_image))->first()->getAbsoluteURL();
-            $og_image = ee('Model')->get('File', $this->get_preferred_value($default_og_image, $seolite_entry->default_og_image))->first()->getAbsoluteURL();
 
             // no specific entry lookup, but we still want the config
             $q = $this->EE->db->get_where('seolite_config', array('seolite_config.site_id' => $site_id));
             $seolite_entry = $q->row();
+            
+            $twitter_image =  $this->get_preferred_value($seolite_entry->default_twitter_image, $default_twitter_image) != '' ? ee('Model')->get('File', $this->get_preferred_value($seolite_entry->default_twitter_image, $default_twitter_image))->first()->getAbsoluteURL() : '';
+            $og_image = $this->get_preferred_value($seolite_entry->default_og_image, $default_og_image) != '' ? ee('Model')->get('File', $this->get_preferred_value($seolite_entry->default_og_image, $default_og_image))->first()->getAbsoluteURL() : '';
+            
             $tagdata = $this->get_tagdata($seolite_entry->template);
             $tagdata = $this->clearExtraTags($tagdata);
 
