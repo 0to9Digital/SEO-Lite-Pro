@@ -180,7 +180,7 @@ class Seo_lite_publisher_ext {
         $status = $this->currentStatus;
 
 /*
-        if (ee()->publisher_setting->show_fallback()) {
+        if (ee()->publisher_setting->showFallback()) {
            
             $translatedWhere = [
                 'publisher_lang_id' => $langId,
@@ -245,7 +245,9 @@ class Seo_lite_publisher_ext {
     {
         $langId = $this->currentLanguageId;
         $status = $this->currentStatus;
-        if ($this->publisherSetting->show_fallback()) {
+        
+        
+        if ($this->publisherSetting->showFallback()) {
             /** @var CI_DB_result $q */
             $translatedWhere = [
                 'publisher_lang_id' => $langId,

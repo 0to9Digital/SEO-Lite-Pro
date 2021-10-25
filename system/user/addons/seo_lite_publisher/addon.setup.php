@@ -1,7 +1,7 @@
 <?php
 
 if (!defined('SEOLITE_PUBLISHER_VERSION')) {
-    define('SEOLITE_PUBLISHER_VERSION', '2.0.1');
+    define('SEOLITE_PUBLISHER_VERSION', '2.0.2');
 }
 
 return [
