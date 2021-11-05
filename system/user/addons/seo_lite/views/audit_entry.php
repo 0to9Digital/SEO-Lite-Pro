@@ -7,7 +7,7 @@
             $titleInfoBody = 'Title is a bit short';
         } elseif (strlen($title) > 70) {
             $titleInfo = ' has--info info--error';
-            $titleInfoBody = 'Title is to long';
+            $titleInfoBody = 'Title is too long';
         } else {
             $titleInfo = ' has--info info--success';
             $titleInfoBody = 'Title is a good length';
