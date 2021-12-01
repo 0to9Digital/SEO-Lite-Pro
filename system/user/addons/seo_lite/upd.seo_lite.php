@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * SEO Lite (v2) Update File
@@ -10,41 +10,42 @@
  * @link       https://0to9.nl
  */
 
-class Seo_lite_upd {
-		
-	var $version = '2.0.3';
-	var $module_name = "Seo_lite";
+class Seo_lite_upd
+{
+
+    var $version = '2.0.3';
+    var $module_name = "Seo_lite";
 
     /**
      * @var Devkit_code_completion
      */
     public $EE;
 
-    function __construct( $switch = TRUE )
-    { 
-		// Make a local reference to the ExpressionEngine super object
-		$this->EE = get_instance();
-    } 
+    function __construct($switch = TRUE)
+    {
+        // Make a local reference to the ExpressionEngine super object
+        $this->EE = get_instance();
+    }
 
     /**
      * Installer for the Seo_lite module
      */
-    function install() 
-	{				
-		$site_id = $this->EE->config->item('site_id');
-		if($site_id == 0)	// if SEO Lite is installed with a theme site_id will be 0, so set it to 1
-		{
-			$site_id = 1;
-		}
-		
-		$data = array(
-			'module_name' 	 => $this->module_name,
-			'module_version' => $this->version,
-			'has_cp_backend' => 'y',
-            'has_publish_fields' => 'y'            
-		);
+    function install()
+    {
+        $site_id = $this->EE->config->item('site_id');
+        if ($site_id == 0)    // if SEO Lite is installed with a theme site_id will be 0, so set it to 1
+        {
+            $site_id = 1;
+        }
 
-		$this->EE->db->insert('modules', $data);		
+        $data = array(
+            'module_name'      => $this->module_name,
+            'module_version' => $this->version,
+            'has_cp_backend' => 'y',
+            'has_publish_fields' => 'y'
+        );
+
+        $this->EE->db->insert('modules', $data);
 
         $this->EE->load->dbforge();
 
@@ -68,7 +69,7 @@ class Seo_lite_upd {
             'title' => array(
                 'type' => 'varchar',
                 'constraint' => '1024',
-            ),            
+            ),
             'keywords' => array(
                 'type' => 'varchar',
                 'constraint' => '1024',
@@ -199,123 +200,123 @@ class Seo_lite_upd {
         $this->EE->load->library('layout');
         $this->EE->layout->add_layout_tabs($this->tabs(), 'seo_lite');
 
-		return TRUE;
-	}
+        return TRUE;
+    }
 
     function tabs()
     {
         $tabs['seo_lite'] = array(
-            'seo_lite_title'=> array(
-                'visible'	=> 'true',
-                'collapse'	=> 'false',
-                'htmlbuttons'	=> 'false',
-                'width'		=> '100%'
-                ),
-            'seo_lite_keywords'=> array(
-                'visible'	=> 'true',
-                'collapse'	=> 'false',
-                'htmlbuttons'	=> 'false',
-                'width'		=> '100%'
-                ),
+            'seo_lite_title' => array(
+                'visible'    => 'true',
+                'collapse'    => 'false',
+                'htmlbuttons'    => 'false',
+                'width'        => '100%'
+            ),
+            'seo_lite_keywords' => array(
+                'visible'    => 'true',
+                'collapse'    => 'false',
+                'htmlbuttons'    => 'false',
+                'width'        => '100%'
+            ),
             'seo_lite_description' => array(
-                'visible'	=> 'true',
-                'collapse'	=> 'false',
-                'htmlbuttons'	=> 'false',
-                'width'		=> '100%',
-                ),   
+                'visible'    => 'true',
+                'collapse'    => 'false',
+                'htmlbuttons'    => 'false',
+                'width'        => '100%',
+            ),
             'seo_lite_robots_directive' => array(
-                'visible'	=> 'true',
-                'collapse'	=> 'false',
-                'htmlbuttons'	=> 'false',
-                'width'		=> '100%',
-                ),   
+                'visible'    => 'true',
+                'collapse'    => 'false',
+                'htmlbuttons'    => 'false',
+                'width'        => '100%',
+            ),
             'seo_lite_og_title' => array(
-                'visible'	=> 'true',
-                'collapse'	=> 'false',
-                'htmlbuttons'	=> 'false',
-                'width'		=> '100%',
-                ),   
+                'visible'    => 'true',
+                'collapse'    => 'false',
+                'htmlbuttons'    => 'false',
+                'width'        => '100%',
+            ),
             'seo_lite_og_type' => array(
-                'visible'	=> 'true',
-                'collapse'	=> 'false',
-                'htmlbuttons'	=> 'false',
-                'width'		=> '100%',
-                ),   
+                'visible'    => 'true',
+                'collapse'    => 'false',
+                'htmlbuttons'    => 'false',
+                'width'        => '100%',
+            ),
             'seo_lite_og_description' => array(
-                'visible'	=> 'true',
-                'collapse'	=> 'false',
-                'htmlbuttons'	=> 'false',
-                'width'		=> '100%',
-                ),
+                'visible'    => 'true',
+                'collapse'    => 'false',
+                'htmlbuttons'    => 'false',
+                'width'        => '100%',
+            ),
             'seo_lite_og_url' => array(
-                'visible'	=> 'true',
-                'collapse'	=> 'false',
-                'htmlbuttons'	=> 'false',
-                'width'		=> '100%',
-                ),
+                'visible'    => 'true',
+                'collapse'    => 'false',
+                'htmlbuttons'    => 'false',
+                'width'        => '100%',
+            ),
             'seo_lite_og_image' => array(
-                'visible'	=> 'true',
-                'collapse'	=> 'false',
-                'htmlbuttons'	=> 'false',
-                'width'		=> '100%',
-                ),   
+                'visible'    => 'true',
+                'collapse'    => 'false',
+                'htmlbuttons'    => 'false',
+                'width'        => '100%',
+            ),
             'seo_lite_twitter_title' => array(
-                'visible'	=> 'true',
-                'collapse'	=> 'false',
-                'htmlbuttons'	=> 'false',
-                'width'		=> '100%',
-                ),   
+                'visible'    => 'true',
+                'collapse'    => 'false',
+                'htmlbuttons'    => 'false',
+                'width'        => '100%',
+            ),
             'seo_lite_twitter_type' => array(
-                'visible'	=> 'true',
-                'collapse'	=> 'false',
-                'htmlbuttons'	=> 'false',
-                'width'		=> '100%',
-                ),
+                'visible'    => 'true',
+                'collapse'    => 'false',
+                'htmlbuttons'    => 'false',
+                'width'        => '100%',
+            ),
             'seo_lite_twitter_description' => array(
-                'visible'	=> 'true',
-                'collapse'	=> 'false',
-                'htmlbuttons'	=> 'false',
-                'width'		=> '100%',
-                ),   
+                'visible'    => 'true',
+                'collapse'    => 'false',
+                'htmlbuttons'    => 'false',
+                'width'        => '100%',
+            ),
             'seo_lite_twitter_type' => array(
-                'visible'	=> 'true',
-                'collapse'	=> 'false',
-                'htmlbuttons'	=> 'false',
-                'width'		=> '100%',
-                ),   
+                'visible'    => 'true',
+                'collapse'    => 'false',
+                'htmlbuttons'    => 'false',
+                'width'        => '100%',
+            ),
             'seo_lite_twitter_image' => array(
-                'visible'	=> 'true',
-                'collapse'	=> 'false',
-                'htmlbuttons'	=> 'false',
-                'width'		=> '100%',
-                ),   
-            );
+                'visible'    => 'true',
+                'collapse'    => 'false',
+                'htmlbuttons'    => 'false',
+                'width'        => '100%',
+            ),
+        );
 
         return $tabs;
     }
 
 
-	/**
-	 * Uninstall the Seo_lite module
-	 */
-	function uninstall() 
-	{ 				
+    /**
+     * Uninstall the Seo_lite module
+     */
+    function uninstall()
+    {
         $this->EE->load->dbforge();
-        
-		$this->EE->db->select('module_id');
-		$query = $this->EE->db->get_where('modules', array('module_name' => $this->module_name));
-		
-		$this->EE->db->where('module_id', $query->row('module_id'));
-		$this->EE->db->delete('module_member_roles');
-		
-		$this->EE->db->where('module_name', $this->module_name);
-		$this->EE->db->delete('modules');
-		
-		$this->EE->db->where('class', $this->module_name);
-		$this->EE->db->delete('actions');
-		
-		$this->EE->db->where('class', $this->module_name.'_mcp');
-		$this->EE->db->delete('actions');
+
+        $this->EE->db->select('module_id');
+        $query = $this->EE->db->get_where('modules', array('module_name' => $this->module_name));
+
+        $this->EE->db->where('module_id', $query->row('module_id'));
+        $this->EE->db->delete('module_member_roles');
+
+        $this->EE->db->where('module_name', $this->module_name);
+        $this->EE->db->delete('modules');
+
+        $this->EE->db->where('class', $this->module_name);
+        $this->EE->db->delete('actions');
+
+        $this->EE->db->where('class', $this->module_name . '_mcp');
+        $this->EE->db->delete('actions');
 
         $this->EE->dbforge->drop_table('seolite_content');
         $this->EE->dbforge->drop_table('seolite_config');
@@ -323,22 +324,174 @@ class Seo_lite_upd {
         $this->EE->load->library('layout');
         $this->EE->layout->delete_layout_tabs($this->tabs(), 'seo_lite');
 
-		return TRUE;
-	}
-	
-	/**
-	 * Update the Seo_lite module
-	 * 
-	 * @param $current current version number
-	 * @return boolean indicating whether or not the module was updated 
-	 */
-    function update($current = '')
-    {
-        // NOTHING TO UPDATE YET
-
         return TRUE;
     }
 
+    /**
+     * Update the Seo_lite module
+     *
+     * @param $current current version number
+     * @return boolean indicating whether or not the module was updated
+     */
+    function update($current = '')
+    {
+        if ($current == $this->version) {
+            return FALSE;
+        }
+
+        // Update seolite database fields for version 2.0.0
+        if ($current < '2.0.0') {
+
+            $this->EE->load->dbforge();
+
+            // Add SEO Lite (v2) config fields
+            $seolite_config_fields = array(
+                'default_og_description' => array(
+                    'type' => 'varchar',
+                    'constraint' => '1024',
+                    'null' => FALSE
+                ),
+                'default_og_image' => array(
+                    'type' => 'varchar',
+                    'constraint' => '1024',
+                    'null' => FALSE
+                ),
+                'default_twitter_description' => array(
+                    'type' => 'varchar',
+                    'constraint' => '1024',
+                    'null' => FALSE
+                ),
+                'default_twitter_image' => array(
+                    'type' => 'varchar',
+                    'constraint' => '1024',
+                    'null' => FALSE
+                ),
+            );
+
+            $this->EE->dbforge->add_column('seolite_config', $seolite_config_fields);
+
+            // Add SEO Lite (v2) content fields
+            $seolite_content_fields = array(
+                'robots_directive' => array(
+                    'type' => 'varchar',
+                    'constraint' => '70',
+                ),
+                'og_title' => array(
+                    'type' => 'varchar',
+                    'constraint' => '70',
+                ),
+                'og_type' => array(
+                    'type' => 'varchar',
+                    'constraint' => '70',
+                ),
+                'og_url' => array(
+                    'type' => 'varchar',
+                    'constraint' => '1024',
+                ),
+                'og_description' => array(
+                    'type' => 'varchar',
+                    'constraint' => '1024',
+                ),
+                'og_image' => array(
+                    'type' => 'varchar',
+                    'constraint' => '1024',
+                ),
+                'twitter_title' => array(
+                    'type' => 'varchar',
+                    'constraint' => '70',
+                ),
+                'twitter_type' => array(
+                    'type' => 'varchar',
+                    'constraint' => '1024',
+                ),
+                'twitter_description' => array(
+                    'type' => 'varchar',
+                    'constraint' => '1024',
+                ),
+                'twitter_image' => array(
+                    'type' => 'varchar',
+                    'constraint' => '1024',
+                ),
+            );
+
+            $this->EE->dbforge->add_column('seolite_content', $seolite_content_fields);
+
+            // Add SEO Lite (v2) tab fields
+            $seolite_tabs = array(
+                'seo_lite_robots_directive' => array(
+                    'visible'    => 'true',
+                    'collapse'    => 'false',
+                    'htmlbuttons'    => 'false',
+                    'width'        => '100%',
+                ),
+                'seo_lite_og_title' => array(
+                    'visible'    => 'true',
+                    'collapse'    => 'false',
+                    'htmlbuttons'    => 'false',
+                    'width'        => '100%',
+                ),
+                'seo_lite_og_type' => array(
+                    'visible'    => 'true',
+                    'collapse'    => 'false',
+                    'htmlbuttons'    => 'false',
+                    'width'        => '100%',
+                ),
+                'seo_lite_og_description' => array(
+                    'visible'    => 'true',
+                    'collapse'    => 'false',
+                    'htmlbuttons'    => 'false',
+                    'width'        => '100%',
+                ),
+                'seo_lite_og_url' => array(
+                    'visible'    => 'true',
+                    'collapse'    => 'false',
+                    'htmlbuttons'    => 'false',
+                    'width'        => '100%',
+                ),
+                'seo_lite_og_image' => array(
+                    'visible'    => 'true',
+                    'collapse'    => 'false',
+                    'htmlbuttons'    => 'false',
+                    'width'        => '100%',
+                ),
+                'seo_lite_twitter_title' => array(
+                    'visible'    => 'true',
+                    'collapse'    => 'false',
+                    'htmlbuttons'    => 'false',
+                    'width'        => '100%',
+                ),
+                'seo_lite_twitter_type' => array(
+                    'visible'    => 'true',
+                    'collapse'    => 'false',
+                    'htmlbuttons'    => 'false',
+                    'width'        => '100%',
+                ),
+                'seo_lite_twitter_description' => array(
+                    'visible'    => 'true',
+                    'collapse'    => 'false',
+                    'htmlbuttons'    => 'false',
+                    'width'        => '100%',
+                ),
+                'seo_lite_twitter_type' => array(
+                    'visible'    => 'true',
+                    'collapse'    => 'false',
+                    'htmlbuttons'    => 'false',
+                    'width'        => '100%',
+                ),
+                'seo_lite_twitter_image' => array(
+                    'visible'    => 'true',
+                    'collapse'    => 'false',
+                    'htmlbuttons'    => 'false',
+                    'width'        => '100%',
+                ),
+            );
+
+            $this->EE->load->library('layout');
+            $this->EE->layout->add_layout_fields($seolite_tabs, 'seo_lite');
+        }
+
+        return TRUE;
+    }
 }
 
 /* End of file upd.seo_lite.php */
