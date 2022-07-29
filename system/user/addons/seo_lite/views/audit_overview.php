@@ -30,12 +30,12 @@ function getMeta() {
                                     <th>&nbsp;</th>
                                 </tr>
                             </thead>
-                            <tbody class='seeo-entry-table'>
+                            <tbody>
                             <?php foreach ($data['entries'] as $entry) : 
                                 $publisher_id = isset($entry['publisher_lang_id']) ? $entry['publisher_lang_id'] : '1';
                             ?>
                                 <tr>
-                                    <td class="audit__id"><?= $entry['entry_id'] ?><?= isset($entry['language_name']) ? '<span class="audit__language">'.$entry['language_name'].'</span>' : '' ?></td>
+                                    <td class="audit__id"><?= $entry['entry_id'] ?><?= isset($entry['language_name']) ? '<span class="audit__language">'.$entry['language_name'].'</span>' : '' ?> <?= isset($entry['publisher_status']) ? '<span class="audit__language">'.$entry['publisher_status'].'</span>' : '' ?></td>
                                     <td class="audit__title"><?= $entry['title'] ?></td>
                                     <td class="audit__status">
                                         <div class="audit__status-item<?= empty($entry['title']) ? ' is--empty' : ' is--full'  ?>" data-name="Title">T</div>

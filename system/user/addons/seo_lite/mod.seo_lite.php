@@ -203,6 +203,7 @@ class Seo_lite {
                     $this->tag_prefix.'robots_directive' => $this->getRobotsValue($seolite_entry->robots_directive),
                     $this->tag_prefix.'og_title' => htmlspecialchars($this->get_preferred_value($seolite_entry->og_title, $seolite_entry->original_title, $default_title), ENT_QUOTES),
                     $this->tag_prefix.'og_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->og_description, $default_og_description, $seolite_entry->default_og_description), ENT_QUOTES),
+                    $this->tag_prefix.'og_url' => htmlspecialchars($seolite_entry->og_url),
                     $this->tag_prefix.'og_type' => $this->getOGType($seolite_entry->og_type),
                     $this->tag_prefix.'twitter_title' => htmlspecialchars($this->get_preferred_value($seolite_entry->twitter_title, $seolite_entry->original_title, $default_title), ENT_QUOTES),
                     $this->tag_prefix.'twitter_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->twitter_description, $default_twitter_description, $seolite_entry->default_twitter_description), ENT_QUOTES),

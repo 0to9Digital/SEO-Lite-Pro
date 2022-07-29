@@ -51,7 +51,8 @@ class Seo_lite_mcp
         
         ee('CP/URL', 'addons/settings/seo_lite/audit_entry');
 
-        ee()->cp->add_to_head("<link rel='stylesheet' href='" . URL_THIRD_THEMES . "seo_lite/css/seo_lite.css?v2.0.5'>");
+        ee()->cp->add_to_head("<link rel='stylesheet' href='" . URL_THIRD_THEMES . "seo_lite/css/seo_lite.css?v2.1.0'>");
+        ee()->cp->add_to_foot("<script type='text/javascript' charset='utf-8' src='". URL_THIRD_THEMES . "seo_lite/js/seo_lite.js?v2.1.0'></script>");
 	}
 
 	function index() 
@@ -127,6 +128,7 @@ class Seo_lite_mcp
                 sl.twitter_description as twitter_description,
                 sl.twitter_image as twitter_image,
                 sl.publisher_lang_id as publisher_lang_id,
+                sl.publisher_status as publisher_status,
                 pub.short_name as language_name
             ')
             ->from('channel_titles ct')
@@ -205,7 +207,8 @@ class Seo_lite_mcp
                 sld.default_og_image as default_og_image,
                 sld.default_twitter_description as default_twitter_description,
                 sld.default_twitter_image as default_twitter_image,
-                pub.short_name as language_name
+                pub.short_name as language_name,
+                pub.short_name_segment as language_segment
             ')
             ->from('channel_titles ct')
             ->where('ct.entry_id', $entry_id)
@@ -298,7 +301,8 @@ class Seo_lite_mcp
             $vars['data']['languages'] = ee()->db->select('
                 id,
                 short_name,
-                long_name
+                long_name,
+                short_name_segment
             ')
             ->from('publisher_languages')
             ->where('is_enabled', 'y')
@@ -307,6 +311,7 @@ class Seo_lite_mcp
         }
 
         $view = ee('View')->make('seo_lite:audit_entry');
+
         return $view->render($vars);
 	}
 	

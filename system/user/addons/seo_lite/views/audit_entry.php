@@ -1,4 +1,9 @@
 <?php 
+
+    $static_pages = ee()->config->item('site_pages');
+    $uris = $static_pages[ee()->config->item('site_id')]['uris'];
+    $auditUrl = $uris[$data['entry_id']];
+
     function googleAudit($data) {
         $title = isset($data['meta_title']) ? $data['meta_title'] . $data['default_title_postfix'] : $data['title'] . $data['default_title_postfix'];
         
@@ -121,54 +126,103 @@ EOT;
                 </div>
             </div>
             <?php endif; ?>
-            <div class="panel-inner">
-                <table class="audit" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Meta</th>
-                            <th>OG</th>
-                            <th>Twitter</th>
-                        </tr>
-                    </thead>
-                    <tbody class='seeo-entry-table'>
-                        <tr>
-                            <td class="audit__status">
-                                <div class="audit__status-item<?= empty($data['title']) ? ' is--empty' : ' is--full'  ?>" data-name="Title">T</div>
-                                <div class="audit__status-item<?= empty($data['meta_description']) ? ' is--empty' : ' is--full'  ?>" data-name="Description">D</div>
-                                <div class="audit__status-item<?= empty($data['meta_keywords']) ? ' is--empty' : ' is--full'  ?>" data-name="Keywords">K</div>
-                                <div class="audit__status-item<?= empty($data['meta_robots']) ? ' is--empty' : ' is--full'  ?>" data-name="Robots">R</div>
-                            </td>
-                            <td class="audit__status">
-                                <div class="audit__status-item<?= empty($data['og_title']) ? ' is--empty' : ' is--full'  ?>" data-name="Title">T</div>
-                                <div class="audit__status-item<?= empty($data['og_description']) ? ' is--empty' : ' is--full'  ?>" data-name="Description">D</div>
-                                <div class="audit__status-item<?= empty($data['og_type']) ? ' is--empty' : ' is--full'  ?>" data-name="Type">T</div>
-                                <div class="audit__status-item<?= empty($data['og_url']) ? ' is--empty' : ' is--full'  ?>" data-name="URL">U</div>
-                                <div class="audit__status-item<?= empty($data['og_image']) ? ' is--empty' : ' is--full'  ?>" data-name="Image">I</div>
-                            </td>
-                            <td class="audit__status">
-                                <div class="audit__status-item<?= empty($data['twitter_title']) ? ' is--empty' : ' is--full'  ?>" data-name="Title">T</div>
-                                <div class="audit__status-item<?= empty($data['twitter_description']) ? ' is--empty' : ' is--full'  ?>" data-name="Description">D</div>
-                                <div class="audit__status-item<?= empty($data['twitter_type']) ? ' is--empty' : ' is--full'  ?>" data-name="Type">T</div>
-                                <div class="audit__status-item<?= empty($data['twitter_image']) ? ' is--empty' : ' is--full'  ?>" data-name="Image">I</div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+
+            <div class="tab-wrap js-active-tab-group">
+          <div class="tab-bar">
+              <div class="tab-bar__tabs">
+                  <button type="button" class="tab-bar__tab js-tab-button active" rel="t-0">Analysis</button>
+                  <button type="button" class="tab-bar__tab js-tab-button" rel="t-1">Examples</button>
+              </div>
+          </div>
+            <div class="tab t-0 tab-open">
+                <div class="panel-inner">
+                    <table class="audit" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Basic Meta</th>
+                                <th>OG Tags</th>
+                                <th>Twitter Tags</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="audit__status has--detail">
+                                    <div class="audit__status-item<?= empty($data['title']) ? ' is--empty' : ' is--full'  ?>" data-name="Title"></div>
+                                    <div class="audit__status-item<?= empty($data['meta_description']) ? ' is--empty' : ' is--full'  ?>" data-name="Description"></div>
+                                    <div class="audit__status-item<?= empty($data['meta_keywords']) ? ' is--empty' : ' is--full'  ?>" data-name="Keywords"></div>
+                                    <div class="audit__status-item<?= empty($data['meta_robots']) ? ' is--empty' : ' is--full'  ?>" data-name="Robots"></div>
+                                </td>
+                                <td class="audit__status has--detail">
+                                    <div class="audit__status-item<?= empty($data['og_title']) ? ' is--empty' : ' is--full'  ?>" data-name="Title"></div>
+                                    <div class="audit__status-item<?= empty($data['og_description']) ? ' is--empty' : ' is--full'  ?>" data-name="Description"></div>
+                                    <div class="audit__status-item<?= empty($data['og_type']) ? ' is--empty' : ' is--full'  ?>" data-name="Type"></div>
+                                    <div class="audit__status-item<?= empty($data['og_url']) ? ' is--empty' : ' is--full'  ?>" data-name="URL"></div>
+                                    <div class="audit__status-item<?= empty($data['og_image']) ? ' is--empty' : ' is--full'  ?>" data-name="Image"></div>
+                                </td>
+                                <td class="audit__status has--detail">
+                                    <div class="audit__status-item<?= empty($data['twitter_title']) ? ' is--empty' : ' is--full'  ?>" data-name="Title"></div>
+                                    <div class="audit__status-item<?= empty($data['twitter_description']) ? ' is--empty' : ' is--full'  ?>" data-name="Description"></div>
+                                    <div class="audit__status-item<?= empty($data['twitter_type']) ? ' is--empty' : ' is--full'  ?>" data-name="Type"></div>
+                                    <div class="audit__status-item<?= empty($data['twitter_image']) ? ' is--empty' : ' is--full'  ?>" data-name="Image"></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <?php
+                        $languageSegment = isset($data['language_segment']) ? '/'.$data['language_segment'] : '';
+                    ?>
+                    <div class="audit__full-scan is--loading" js-seo-lite-full-scan="<?=$languageSegment.$auditUrl?>">
+                    </div>
+                </div>
             </div>
-            <div class="panel-inner">
-                <h4>Google</h4>
-                <p class="panel-intro">This is an example of how the page looks like on Google Search.</p>
-                <?= googleAudit($data) ?>
-            </div>
-            <div class="panel-inner">
-                <h4>Facebook</h4>
-                <p class="panel-intro">This is an example of how the page looks like on Facebook.</p>
-                <?= facebookAudit($data) ?>
-            </div>
-            <div class="panel-inner">
-                <h4>Twitter</h4>
-                <p class="panel-intro">This is an example of how the page looks like on Twitter.</p>
-                <?= twitterAudit($data) ?>
+            <div class="tab t-1">
+                <div class="panel-inner">
+                    <table class="audit" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Google</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p class="panel-intro">This is an example of how the page looks like on Google Search.</p>
+                                    <?= googleAudit($data) ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="audit" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Facebook</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p class="panel-intro">This is an example of how the page looks like on Facebook.</p>
+                                    <?= facebookAudit($data) ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="audit" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Twitter</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p class="panel-intro">This is an example of how the page looks like on Twitter.</p>
+                                    <?= twitterAudit($data) ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
