@@ -51,8 +51,8 @@ class Seo_lite_mcp
         
         ee('CP/URL', 'addons/settings/seo_lite/audit_entry');
 
-        ee()->cp->add_to_head("<link rel='stylesheet' href='" . URL_THIRD_THEMES . "seo_lite/css/seo_lite.css?v2.1.0'>");
-        ee()->cp->add_to_foot("<script type='text/javascript' charset='utf-8' src='". URL_THIRD_THEMES . "seo_lite/js/seo_lite.js?v2.1.0'></script>");
+        ee()->cp->add_to_head("<link rel='stylesheet' href='" . URL_THIRD_THEMES . "seo_lite/css/seo_lite.css?v2.1.1'>");
+        ee()->cp->add_to_foot("<script type='text/javascript' charset='utf-8' src='". URL_THIRD_THEMES . "seo_lite/js/seo_lite.js?v2.1.1'></script>");
 	}
 
 	function index() 

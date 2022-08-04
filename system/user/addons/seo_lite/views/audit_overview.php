@@ -57,8 +57,8 @@ function getMeta() {
                                         <div class="audit__status-item<?= empty($entry['twitter_image']) ? ' is--empty' : ' is--full'  ?>" data-name="Image">I</div>
                                     </td>
                                     <td class="audit__buttons">
-                                        <a href="<?= ee('CP/URL', 'publish/edit/entry/'. $entry['entry_id'])?>" class="button button--secondary">Edit page <i class="button__icon fas fa-edit"></i></a>
-                                        <a href="<?= isset($data['publisher']) ? ee('CP/URL', 'addons/settings/seo_lite/audit_entry')->setQueryStringVariable('entry_id', $entry['entry_id'])->setQueryStringVariable('publisher_id', $publisher_id) : ee('CP/URL', 'addons/settings/seo_lite/audit_entry')->setQueryStringVariable('entry_id', $entry['entry_id']) ?>" class="button button--primary">More details<i class="button__icon fas fa-chevron-right"></i></a>
+                                        <a href="<?= ee('CP/URL', 'publish/edit/entry/'. $entry['entry_id'])?>" class="button button--secondary">Edit page <i class="button__icon fal fa-edit"></i></a>
+                                        <a href="<?= isset($data['publisher']) ? ee('CP/URL', 'addons/settings/seo_lite/audit_entry')->setQueryStringVariable('entry_id', $entry['entry_id'])->setQueryStringVariable('publisher_id', $publisher_id) : ee('CP/URL', 'addons/settings/seo_lite/audit_entry')->setQueryStringVariable('entry_id', $entry['entry_id']) ?>" class="button button--primary">More details<i class="button__icon fal fa-chevron-right"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach;?>

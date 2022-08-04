@@ -110,7 +110,7 @@ EOT;
             <div class="title-bar">
                 <h3 class="title-bar__title"><?=lang('audit')?> '<?=$data['title']?>' <?=isset($data['publisher']) ? '(' .  $languageName . ')' : ''?></h3>
                 <fieldset class="right title-bar__extra-tools">
-                <a href="<?= ee('CP/URL', 'publish/edit/entry/'. $data['entry_id'])?>" class="button button--secondary">Edit page <i class="button__icon fas fa-edit"></i></a>
+                <a href="<?= ee('CP/URL', 'publish/edit/entry/'. $data['entry_id'])?>" class="button button--secondary">Edit page <i class="button__icon fal fa-edit"></i></a>
                 </fieldset>						
             </div>
         </div> 
