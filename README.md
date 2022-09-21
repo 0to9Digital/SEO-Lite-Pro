@@ -10,10 +10,12 @@ Put one of these tags in your template:
 * Static mode with everything overridden: ```{exp:seo_lite default_title="About us" default_keywords="new, keywords" default_description="This description is unique for this page"}```
 
 ## What's new
-* Twitter and OG tag support.  
-![Example of Twitter and OG tags](examples/example-tags.jpg)
+* Analyse your page.  
+![Example of Analysis tab](examples/example-2.png)
 * Simple audit with Google, Facebook and Twitter examples.  
-![Example of audit](examples/example-audit.jpg)
+![Example of Google, Facebook and Twitter](examples/example-1.png)
+* Google Page Speed test integrated.  
+![Example of Google Page Speed](examples/example-3.png)
 
 ## Supports
 * ExpressionEngine 5
