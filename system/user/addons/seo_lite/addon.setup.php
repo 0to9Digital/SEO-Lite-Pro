@@ -3,9 +3,9 @@
 return array(
     'author'      => '0to9 Digital',
     'author_url'  => 'https://0to9.nl',
-    'name'        => 'SEO Lite (v2)',
-    'description' => 'The no-brainer approach to SEO for ExpressionEngine. This module is a fork of SEO Lite (https://github.com/bjornbjorn/SEO-Lite)',
-    'version'     => '2.1.1',
-    'namespace'   => '0to9\SEO-Lite-2',
+    'name'        => 'SEO Lite (Pro)',
+    'description' => 'The most powerfull SEO module for ExpressionEngine. This module is a fork of SEO Lite (https://github.com/bjornbjorn/SEO-Lite)',
+    'version'     => '2.2.0',
+    'namespace'   => '0to9\SEO-Lite-Pro',
     'settings_exist' => TRUE,
 );

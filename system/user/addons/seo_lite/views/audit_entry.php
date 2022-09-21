@@ -118,12 +118,10 @@ EOT;
             <?php
             if (isset($data['languages'])) :
             ?>
-            <div class="panel-inner">
-                <div class="c-languages">
+            <div class="c-languages">
                 <?php foreach ($data['languages'] as $language) : ?>
                 <a class="languages__language <?=isset($data['publisher_id']) && $language['id'] == $data['publisher_id'] ? ' is--active' : '' ?>" href="/admin.php?/cp/addons/settings/seo_lite/audit_entry?entry_id=<?=$data['entry_id']?>&publisher_id=<?=$language['id']?>"><?=$language['long_name']?></a>
                 <?php endforeach;?>
-                </div>
             </div>
             <?php endif; ?>
 
@@ -132,6 +130,7 @@ EOT;
               <div class="tab-bar__tabs">
                   <button type="button" class="tab-bar__tab js-tab-button active" rel="t-0">Analysis</button>
                   <button type="button" class="tab-bar__tab js-tab-button" rel="t-1">Examples</button>
+                  <button type="button" class="tab-bar__tab js-tab-button" rel="t-2" js-page-speed-tab>Page Speed</button>
               </div>
           </div>
             <div class="tab t-0 tab-open">
@@ -150,7 +149,7 @@ EOT;
                                     <div class="audit__status-item<?= empty($data['title']) ? ' is--empty' : ' is--full'  ?>" data-name="Title"></div>
                                     <div class="audit__status-item<?= empty($data['meta_description']) ? ' is--empty' : ' is--full'  ?>" data-name="Description"></div>
                                     <div class="audit__status-item<?= empty($data['meta_keywords']) ? ' is--empty' : ' is--full'  ?>" data-name="Keywords"></div>
-                                    <div class="audit__status-item<?= empty($data['meta_robots']) ? ' is--empty' : ' is--full'  ?>" data-name="Robots"></div>
+                                    <div class="audit__status-item<?= empty($data['meta_robots']) ? ' is--full' : ' is--info'  ?>" data-name="Robots"></div>
                                 </td>
                                 <td class="audit__status has--detail">
                                     <div class="audit__status-item<?= empty($data['og_title']) ? ' is--empty' : ' is--full'  ?>" data-name="Title"></div>
@@ -224,7 +223,13 @@ EOT;
                     </table>
                 </div>
             </div>
+            <div class="tab t-2">
+                <div class="panel-inner">
+                    <div class="c-page-speed is--loading" js-page-speed></div>
+                </div>
+            </div>
         </div>
     </div>
+
 <?php
 /* End of file audit_entry.php */

@@ -1,7 +1,7 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * SEO Lite (v2) Module Front End File
+ * SEO Lite (Pro) Module Front End File
  *
  * @category   Module
  * @package    ExpressionEngine

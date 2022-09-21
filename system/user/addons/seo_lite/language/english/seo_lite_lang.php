@@ -1,9 +1,9 @@
 <?php
 
 $lang['seo_lite'] = 'SEO';
-$lang['seo_lite_module_name'] = "SEO Lite (v2)";
-$lang['seo_lite_module_description'] = "One calorie SEO module, no sugar added!";
-$lang['seo_lite_welcome'] = "Welcome to SEO Lite (v2)";
+$lang['seo_lite_module_name'] = "SEO Lite (Pro)";
+$lang['seo_lite_module_description'] = "Most powerfull SEO module for ExpressionEngine";
+$lang['seo_lite_welcome'] = "Welcome to SEO Lite (Pro)";
 $lang['default_keywords'] = "Default page keywords";
 $lang['default_description'] = "Default page description";
 $lang['settings'] = "Settings";
@@ -33,7 +33,7 @@ $lang['development'] = "Development";
 $lang['robots_directive'] = "Robots directive";
 $lang['current_value'] = 'Current Value';
 $lang['seolite_settings_saved_title'] = 'Saved!';
-$lang['seolite_settings_saved'] = 'SEO Lite (v2) settings saved';
+$lang['seolite_settings_saved'] = 'SEO Lite (Pro) settings saved';
 $lang['seotitle'] = 'Title';
 $lang['title_instructions'] = "Optional, if you do not specify anything the entry title will be used. Remember that most search-engines use a maximum of 60 characters for the title.";
 $lang['seokeywords'] = 'Meta Keywords';

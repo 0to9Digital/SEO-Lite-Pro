@@ -41,7 +41,7 @@ function getMeta() {
                                         <div class="audit__status-item<?= empty($entry['title']) ? ' is--empty' : ' is--full'  ?>" data-name="Title">T</div>
                                         <div class="audit__status-item<?= empty($entry['meta_description']) ? ' is--empty' : ' is--full'  ?>" data-name="Description">D</div>
                                         <div class="audit__status-item<?= empty($entry['meta_keywords']) ? ' is--empty' : ' is--full'  ?>" data-name="Keywords">K</div>
-                                        <div class="audit__status-item<?= empty($entry['meta_robots']) ? ' is--empty' : ' is--full'  ?>" data-name="Robots">R</div>
+                                        <div class="audit__status-item<?= empty($entry['meta_robots']) ? ' is--full' : ' is--info'  ?>" data-name="Robots">R</div>
                                     </td>
                                     <td class="audit__status">
                                         <div class="audit__status-item<?= empty($entry['og_title']) ? ' is--empty' : ' is--full'  ?>" data-name="Title">T</div>
