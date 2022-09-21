@@ -1,5 +1,5 @@
-﻿# SEO Lite (v2)
-SEO Lite (v2) is a lightweight SEO addon for ExpressionEngine.
+﻿# SEO Lite (Pro)
+SEO Lite (pro) is a lightweight SEO addon for ExpressionEngine.
 
 ## Documentation
 Put one of these tags in your template:
@@ -18,13 +18,14 @@ Put one of these tags in your template:
 ## Supports
 * ExpressionEngine 5
 * ExpressionEngine 6
+* ExpressionEngine 7
 
 ## Compatibility
 * Publisher
 * Structure
 
 ## Based on
-SEO Lite (v2) is based on [SEO Lite by bjornbjorn](https://github.com/bjornbjorn/SEO-Lite)
+SEO Lite (Pro) is based on [SEO Lite by bjornbjorn](https://github.com/bjornbjorn/SEO-Lite)
 
 ## Developers
 * [Robin Treur](mailto:robin@0to9.nl)
