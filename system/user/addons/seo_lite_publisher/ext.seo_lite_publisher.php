@@ -44,8 +44,8 @@ class Seo_lite_publisher_ext {
 
         $this->request = ee(Request::NAME);
         $this->publisherSetting = ee(Setting::NAME);
-        // $this->currentLanguageId = $this->request->getCurrentLanguage()->getId();
-        // $this->defaultLanguageId = $this->request->getDefaultLanguage()->getId();
+        $this->currentLanguageId = $this->request->getCurrentLanguage()->getId();
+        $this->defaultLanguageId = $this->request->getDefaultLanguage()->getId();
         $this->currentStatus = $this->request->getCurrentStatus();
         $this->saveStatus = $this->request->getSaveStatus();
     }
