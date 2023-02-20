@@ -112,7 +112,6 @@ class Seo_lite_tab {
        );
 
         if($this->EE->config->item('seolite_show_keywords_field') != 'n') {
-
             $settings['seo_lite_keywords'] = array(
                'field_id' => 'seo_lite_keywords',
                'field_label' => lang('seokeywords'),
@@ -146,21 +145,6 @@ class Seo_lite_tab {
            'field_maxl' => '1024'
         );
 
-        $settings['seo_lite_robots_directive'] = array(
-            'field_id' => 'seo_lite_robots_directive',
-            'field_label' => lang('robots_directive'),
-            'field_required' => 'n',
-            'field_data' => $robotsdirective,
-            'field_list_items' => array('INDEX, FOLLOW', 'NOINDEX, FOLLOW', 'INDEX, NOFOLLOW', 'NOINDEX, NOFOLLOW'),
-            'field_fmt' => '',
-            'field_instructions' => '',
-            'field_show_fmt' => 'n',
-            'field_fmt_options' => array(),
-            'field_pre_populate' => 'n',
-            'field_text_direction' => 'ltr',
-            'field_type' => 'select'
-        );
-
         $settings['seo_lite_og_title'] = array(
             'field_id' => 'seo_lite_og_title',
             'field_label' => lang('og_title'),
@@ -168,7 +152,7 @@ class Seo_lite_tab {
             'field_data' => $ogtitle,
             'field_list_items' => '',
             'field_fmt' => '',
-            'field_instructions' => '',
+            'field_instructions' => lang('og_title_instructions'),
             'field_show_fmt' => 'n',
             'field_fmt_options' => array(),
             'field_pre_populate' => 'n',
@@ -184,7 +168,7 @@ class Seo_lite_tab {
             'field_data' => $ogdescription,
             'field_list_items' => '',
             'field_fmt' => '',
-            'field_instructions' => '',
+            'field_instructions' => lang('og_description_instr'),
             'field_show_fmt' => 'n',
             'field_fmt_options' => array(),
             'field_pre_populate' => 'n',
@@ -198,9 +182,9 @@ class Seo_lite_tab {
             'field_label' => lang('og_type'),
             'field_required' => 'n',
             'field_data' => $ogtype,
-            'field_list_items' => array('Article', 'Book', 'Music - Song', 'Music - Album', 'Music - Playlist', 'Music - Radio Station', 'Profile', 'Video - Movie', 'Video - Episode', 'Video - TV Show', 'Video - Other', 'Website'),
+            'field_list_items' => array('Article', 'Website', 'Book', 'Music - Song', 'Music - Album', 'Music - Playlist', 'Music - Radio Station', 'Profile', 'Video - Movie', 'Video - Episode', 'Video - TV Show', 'Video - Other'),
             'field_fmt' => '',
-            'field_instructions' => '',
+            'field_instructions' => lang('og_type_instructions'),
             'field_show_fmt' => 'n',
             'field_fmt_options' => array(),
             'field_pre_populate' => 'n',
@@ -215,7 +199,7 @@ class Seo_lite_tab {
             'field_data' => $ogurl,
             'field_list_items' => '',
             'field_fmt' => '',
-            'field_instructions' => '',
+            'field_instructions' => lang('og_url_instructions'),
             'field_show_fmt' => 'n',
             'field_fmt_options' => array(),
             'field_pre_populate' => 'n',
@@ -231,7 +215,7 @@ class Seo_lite_tab {
             'field_data' => $ogimage,
             'field_list_items' => '',
             'field_fmt' => '',
-            'field_instructions' => '',
+            'field_instructions' => lang('og_image_instructions'),
             'field_show_fmt' => 'n',
             'field_fmt_options' => '',
             'field_pre_populate' => 'n',
@@ -246,7 +230,7 @@ class Seo_lite_tab {
             'field_data' => $twittertitle,
             'field_list_items' => '',
             'field_fmt' => '',
-            'field_instructions' => '',
+            'field_instructions' => lang('twitter_title_instructions'),
             'field_show_fmt' => 'n',
             'field_fmt_options' => array(),
             'field_pre_populate' => 'n',
@@ -262,7 +246,7 @@ class Seo_lite_tab {
             'field_data' => $twitterdescription,
             'field_list_items' => '',
             'field_fmt' => '',
-            'field_instructions' => '',
+            'field_instructions' => lang('twitter_description_instructions'),
             'field_show_fmt' => 'n',
             'field_fmt_options' => array(),
             'field_pre_populate' => 'n',
@@ -278,7 +262,7 @@ class Seo_lite_tab {
             'field_data' => $twittertype,
             'field_list_items' => array('Summary', 'Summary - Large Image', 'Player'),
             'field_fmt' => '',
-            'field_instructions' => '',
+            'field_instructions' => lang('twitter_type_instructions'),
             'field_show_fmt' => 'n',
             'field_fmt_options' => array(),
             'field_pre_populate' => 'n',
@@ -293,12 +277,27 @@ class Seo_lite_tab {
             'field_data' => $twitterimage,
             'field_list_items' => '',
             'field_fmt' => '',
-            'field_instructions' => '',
+            'field_instructions' => lang('twitter_image_instructions'),
             'field_show_fmt' => 'n',
             'field_fmt_options' => '',
             'field_pre_populate' => 'n',
             'field_text_direction' => 'ltr',
             'field_type' => 'file'
+        );
+
+        $settings['seo_lite_robots_directive'] = array(
+            'field_id' => 'seo_lite_robots_directive',
+            'field_label' => lang('robots_directive'),
+            'field_required' => 'n',
+            'field_data' => $robotsdirective,
+            'field_list_items' => array('INDEX, FOLLOW', 'NOINDEX, FOLLOW', 'INDEX, NOFOLLOW', 'NOINDEX, NOFOLLOW'),
+            'field_fmt' => '',
+            'field_instructions' => lang('robots_directive_instructions'),
+            'field_show_fmt' => 'n',
+            'field_fmt_options' => array(),
+            'field_pre_populate' => 'n',
+            'field_text_direction' => 'ltr',
+            'field_type' => 'select'
         );
 
         $settings['seo_lite_extra'] = array(
