@@ -74,14 +74,14 @@ class Seo_lite {
                 $og_image = ee('Model')->get('File', $this->get_preferred_value($seolite_entry->default_og_image, $default_og_image))->first()->getAbsoluteURL();
 
                 $vars = array(
-                    $this->tag_prefix.'title' => htmlspecialchars($this->get_preferred_value($seolite_entry->cat_name, $default_title), ENT_QUOTES), // use SEO title over original if it exists, then original, then default_title from parameter
-                    $this->tag_prefix.'meta_keywords' => htmlspecialchars($this->get_preferred_value($seolite_entry->default_keywords, $default_keywords), ENT_QUOTES),
-                    $this->tag_prefix.'meta_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->cat_description, $seolite_entry->default_description, $default_description), ENT_QUOTES),
-                    $this->tag_prefix.'twitter_title' => htmlspecialchars($this->get_preferred_value($seolite_entry->cat_name, $default_title), ENT_QUOTES),
-                    $this->tag_prefix.'twitter_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->default_twitter_description, $default_twitter_description), ENT_QUOTES),
+                    $this->tag_prefix.'title' => htmlspecialchars($this->get_preferred_value($seolite_entry->cat_name, $default_title), ENT_QUOTES, 'UTF-8', FALSE), // use SEO title over original if it exists, then original, then default_title from parameter
+                    $this->tag_prefix.'meta_keywords' => htmlspecialchars($this->get_preferred_value($seolite_entry->default_keywords, $default_keywords), ENT_QUOTES, 'UTF-8', FALSE),
+                    $this->tag_prefix.'meta_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->cat_description, $seolite_entry->default_description, $default_description), ENT_QUOTES, 'UTF-8', FALSE),
+                    $this->tag_prefix.'twitter_title' => htmlspecialchars($this->get_preferred_value($seolite_entry->cat_name, $default_title), ENT_QUOTES, 'UTF-8', FALSE),
+                    $this->tag_prefix.'twitter_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->default_twitter_description, $default_twitter_description), ENT_QUOTES, 'UTF-8', FALSE),
                     $this->tag_prefix.'twitter_image' => $twitter_image,
-                    $this->tag_prefix.'og_title' => htmlspecialchars($this->get_preferred_value($seolite_entry->cat_name, $default_title), ENT_QUOTES),
-                    $this->tag_prefix.'og_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->default_og_description, $default_og_description), ENT_QUOTES),
+                    $this->tag_prefix.'og_title' => htmlspecialchars($this->get_preferred_value($seolite_entry->cat_name, $default_title), ENT_QUOTES, 'UTF-8', FALSE),
+                    $this->tag_prefix.'og_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->default_og_description, $default_og_description), ENT_QUOTES, 'UTF-8', FALSE),
                     $this->tag_prefix.'og_image' => $og_image,
                 );
 
@@ -197,16 +197,16 @@ class Seo_lite {
                 }
 
                 $vars = array(
-                    $this->tag_prefix.'title' => htmlspecialchars($this->get_preferred_value($seolite_entry->seo_title, $seolite_entry->original_title, $default_title), ENT_QUOTES), // use SEO title over original if it exists, then original, then default_title from parameter
-                    $this->tag_prefix.'meta_keywords' => htmlspecialchars($this->get_preferred_value($seolite_entry->keywords, $default_keywords, $seolite_entry->default_keywords), ENT_QUOTES),
-                    $this->tag_prefix.'meta_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->description, $default_description, $seolite_entry->default_description), ENT_QUOTES),
+                    $this->tag_prefix.'title' => htmlspecialchars($this->get_preferred_value($seolite_entry->seo_title, $seolite_entry->original_title, $default_title), ENT_QUOTES, 'UTF-8', FALSE), // use SEO title over original if it exists, then original, then default_title from parameter
+                    $this->tag_prefix.'meta_keywords' => htmlspecialchars($this->get_preferred_value($seolite_entry->keywords, $default_keywords, $seolite_entry->default_keywords), ENT_QUOTES, 'UTF-8', FALSE),
+                    $this->tag_prefix.'meta_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->description, $default_description, $seolite_entry->default_description), ENT_QUOTES, 'UTF-8', FALSE),
                     $this->tag_prefix.'robots_directive' => $this->getRobotsValue($seolite_entry->robots_directive),
-                    $this->tag_prefix.'og_title' => htmlspecialchars($this->get_preferred_value($seolite_entry->og_title, $seolite_entry->original_title, $default_title), ENT_QUOTES),
-                    $this->tag_prefix.'og_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->og_description, $default_og_description, $seolite_entry->default_og_description), ENT_QUOTES),
+                    $this->tag_prefix.'og_title' => htmlspecialchars($this->get_preferred_value($seolite_entry->og_title, $seolite_entry->original_title, $default_title), ENT_QUOTES, 'UTF-8', FALSE),
+                    $this->tag_prefix.'og_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->og_description, $default_og_description, $seolite_entry->default_og_description), ENT_QUOTES, 'UTF-8', FALSE),
                     $this->tag_prefix.'og_url' => htmlspecialchars($seolite_entry->og_url),
                     $this->tag_prefix.'og_type' => $this->getOGType($seolite_entry->og_type),
-                    $this->tag_prefix.'twitter_title' => htmlspecialchars($this->get_preferred_value($seolite_entry->twitter_title, $seolite_entry->original_title, $default_title), ENT_QUOTES),
-                    $this->tag_prefix.'twitter_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->twitter_description, $default_twitter_description, $seolite_entry->default_twitter_description), ENT_QUOTES),
+                    $this->tag_prefix.'twitter_title' => htmlspecialchars($this->get_preferred_value($seolite_entry->twitter_title, $seolite_entry->original_title, $default_title), ENT_QUOTES, 'UTF-8', FALSE),
+                    $this->tag_prefix.'twitter_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->twitter_description, $default_twitter_description, $seolite_entry->default_twitter_description), ENT_QUOTES, 'UTF-8', FALSE),
                     $this->tag_prefix.'twitter_type' => $this->getTwitterType($seolite_entry->twitter_type),
                     $this->tag_prefix.'twitter_image' => $twitter_image,
                     $this->tag_prefix.'og_image' => $og_image,
@@ -273,14 +273,14 @@ class Seo_lite {
             $tagdata = $this->clearExtraTags($tagdata);
 
             $vars = array(
-                $this->tag_prefix.'title' => htmlspecialchars($default_title, ENT_QUOTES),
-                $this->tag_prefix.'meta_keywords' => htmlspecialchars($this->get_preferred_value($default_keywords ,$seolite_entry->default_keywords), ENT_QUOTES) ,
-                $this->tag_prefix.'meta_description' => htmlspecialchars($this->get_preferred_value($default_description, $seolite_entry->default_description), ENT_QUOTES),
-                $this->tag_prefix.'twitter_title' => htmlspecialchars($default_title, ENT_QUOTES),
-                $this->tag_prefix.'twitter_description' => htmlspecialchars($this->get_preferred_value($default_twitter_description, $seolite_entry->default_twitter_description), ENT_QUOTES),
+                $this->tag_prefix.'title' => htmlspecialchars($default_title, ENT_QUOTES, 'UTF-8', FALSE),
+                $this->tag_prefix.'meta_keywords' => htmlspecialchars($this->get_preferred_value($default_keywords ,$seolite_entry->default_keywords), ENT_QUOTES, 'UTF-8', FALSE) ,
+                $this->tag_prefix.'meta_description' => htmlspecialchars($this->get_preferred_value($default_description, $seolite_entry->default_description), ENT_QUOTES, 'UTF-8', FALSE),
+                $this->tag_prefix.'twitter_title' => htmlspecialchars($default_title, ENT_QUOTES, 'UTF-8', FALSE),
+                $this->tag_prefix.'twitter_description' => htmlspecialchars($this->get_preferred_value($default_twitter_description, $seolite_entry->default_twitter_description), ENT_QUOTES, 'UTF-8', FALSE),
                 $this->tag_prefix.'twitter_image' => $twitter_image,
-                $this->tag_prefix.'og_title' => htmlspecialchars($default_title, ENT_QUOTES),
-                $this->tag_prefix.'og_description' => htmlspecialchars($this->get_preferred_value($default_og_description, $seolite_entry->default_og_description), ENT_QUOTES),
+                $this->tag_prefix.'og_title' => htmlspecialchars($default_title, ENT_QUOTES, 'UTF-8', FALSE),
+                $this->tag_prefix.'og_description' => htmlspecialchars($this->get_preferred_value($default_og_description, $seolite_entry->default_og_description), ENT_QUOTES, 'UTF-8', FALSE),
                 $this->tag_prefix.'og_image' => $og_image,
             );
         }
