@@ -22,6 +22,7 @@
                         <label for="seolite_default_description"><?= lang('default_description'); ?></label>
                     </div>
                     <div class="setting-field">
+                        <div class="seeo__instructions field-instruct"><em><?= lang('default_description_instructions'); ?></em></div>
                         <input type="text" name="seolite_default_description" id="seolite_default_description" value="<?=htmlspecialchars($default_description)?>"/>
                     </div>
                 </fieldset>
@@ -31,6 +32,7 @@
                         <label for="seolite_default_title_postfix"><?= lang('default_title_postfix'); ?></label>
                     </div>
                     <div class="setting-field">
+                        <div class="seeo__instructions field-instruct"><em><?= lang('default_title_postfix_description'); ?></em></div>
                         <input type="text" name="seolite_default_title_postfix" id="seolite_default_title_postfix" value="<?=htmlspecialchars($default_title_postfix)?>"/>
                     </div>
                 </fieldset>
@@ -52,7 +54,7 @@
                         <label for="seolite_default_og_image"><?= lang('og_image'); ?></label>
                     </div>
                     <div class="setting-field">
-                        <div class="seeo__instructions field-instruct"><em><?= lang('og_image_instr'); ?></em></div>
+                        <div class="seeo__instructions field-instruct"><em><?= lang('og_image_instructions'); ?></em></div>
                         <div class="field-control c-upload-image">
                             <?php
                                 $filepicker = ee('CP/FilePicker')->make();
@@ -85,7 +87,7 @@
                         <label for="seolite_default_twitter_description"><?= lang('twitter_description'); ?></label>
                     </div>
                     <div class="setting-field">
-                        <div class="seeo__instructions field-instruct"><em><?= lang('twitter_description_instr'); ?></em></div>
+                        <div class="seeo__instructions field-instruct"><em><?= lang('twitter_description_instructions'); ?></em></div>
                         <input type="text" name="seolite_default_twitter_description" id="seolite_default_twitter_description" value="<?=htmlspecialchars($default_twitter_description)?>"/>
                     </div>
                 </fieldset>
@@ -95,7 +97,7 @@
                         <label for="seolite_default_twitter_image"><?= lang('twitter_image'); ?></label>
                     </div>  
                     <div class="setting-field">
-                        <div class="seeo__instructions field-instruct"><em><?= lang('twitter_image_instr'); ?></em></div>
+                        <div class="seeo__instructions field-instruct"><em><?= lang('twitter_image_instructions'); ?></em></div>
                         <div class="field-control">
                             <div class="field-control c-upload-image">
                             <?php
