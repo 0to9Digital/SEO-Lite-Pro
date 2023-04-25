@@ -111,7 +111,7 @@ class Seo_lite_tab {
            'field_maxl' => '90'
        );
 
-        if($this->EE->config->item('seolite_show_keywords_field') != 'n') {
+        if($this->EE->config->item('seolite_show_keywords_field') != 'n' && $keywords) {
             $settings['seo_lite_keywords'] = array(
                'field_id' => 'seo_lite_keywords',
                'field_label' => lang('seokeywords'),

@@ -8,14 +8,7 @@
                 <?php echo form_open($save_settings_url, array('class' => 'settings'))?>
                 <?php echo ee('CP/Alert')->get('seolite-settings-saved')?>
 
-                <fieldset class="col-group">
-                    <div class="setting-txt">
-                        <label for="seolite_default_keywords"><?= lang('default_keywords'); ?></label>
-                    </div>
-                    <div class="setting-field">
-                        <input type="text" name="seolite_default_keywords" id="seolite_default_keywords" value="<?=htmlspecialchars($default_keywords)?>"/>
-                    </div>
-                </fieldset>
+                <input type="hidden" name="seolite_default_keywords" id="seolite_default_keywords" value=""/>
 
                 <fieldset class="col-group">
                     <div class="setting-txt">
