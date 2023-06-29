@@ -9,6 +9,23 @@ Put one of these tags in your template:
 * Static mode aka I-Will-Provide-Values-In-Template: (this will output "About Us" for the title tag but still use the default keywords/description for the site): ```{exp:seo_lite default_title="About us"}```
 * Static mode with everything overridden: ```{exp:seo_lite default_title="About us" default_keywords="new, keywords" default_description="This description is unique for this page"}```
 
+* Field variables: <br>
+```
+{meta_keywords}
+{meta_description}
+{canonical_url}
+{og_description} 
+{og_image}
+{og_title}
+{og_type}
+{og_url}
+{robots_directive}
+{twitter_description}
+{twitter_image}
+{twitter_title}
+{twitter_type}
+```
+
 ## What's new
 * Analyse your page.  
 ![Example of Analysis tab](examples/example-2.png)
@@ -16,6 +33,8 @@ Put one of these tags in your template:
 ![Example of Google, Facebook and Twitter](examples/example-1.png)
 * Google Page Speed test integrated.  
 ![Example of Google Page Speed](examples/example-3.png)
+* Intelligent filled out variables mode example.
+![Example of vars](examples/example-4.png)
 
 ## Supports
 * ExpressionEngine 5
