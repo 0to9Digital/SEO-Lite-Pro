@@ -571,37 +571,37 @@ class Seo_lite {
                 return 'article';
                 break;
             case 1:
-                return 'book';
+                return 'website';
                 break;
             case 2:
-                return 'music.song';
+                return 'book';
                 break;
             case 3:
-                return 'music.album';
+                return 'music.song';
                 break;
             case 4:
-                return 'music.playlist';
+                return 'music.album';
                 break;
             case 5:
-                return 'music.radio_station';
+                return 'music.playlist';
                 break;
             case 6:
-                return 'profile';
+                return 'music.radio_station';
                 break;
             case 7:
-                return 'video.movie';
+                return 'profile';
                 break;
             case 8:
-                return 'video.episode';
+                return 'video.movie';
                 break;
             case 9:
-                return 'video.tv_show';
+                return 'video.episode';
                 break;
             case 10:
-                return 'video.other';
+                return 'video.tv_show';
                 break;
             case 11:
-                return 'website';
+                return 'video.other';
                 break;
             default:
                 return '';
