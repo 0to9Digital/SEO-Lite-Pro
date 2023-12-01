@@ -306,8 +306,11 @@ class Seo_lite_upd
         $this->EE->db->select('module_id');
         $query = $this->EE->db->get_where('modules', array('module_name' => $this->module_name));
 
-        $this->EE->db->where('module_id', $query->row('module_id'));
-        $this->EE->db->delete('module_member_roles');
+        if (version_compare(APP_VER, '6.0', '>=')) {
+            $this->EE->db->delete('module_member_roles', ['module_id' => $query->row('module_id')]);
+        } else {
+            $this->EE->db->delete('module_member_groups', ['module_id' => $query->row('module_id')]);
+        }
 
         $this->EE->db->where('module_name', $this->module_name);
         $this->EE->db->delete('modules');
