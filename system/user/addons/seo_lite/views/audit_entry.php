@@ -1,12 +1,12 @@
-<?php 
+<?php
 
     $static_pages = ee()->config->item('site_pages');
     $uris = $static_pages[ee()->config->item('site_id')]['uris'];
-    $auditUrl = $uris[$data['entry_id']];
+    $auditUrl = $uris[$data['entry_id']] ?? '';
 
     function googleAudit($data) {
         $title = isset($data['meta_title']) ? $data['meta_title'] . $data['default_title_postfix'] : $data['title'] . $data['default_title_postfix'];
-        
+
         if(strlen($title) < 50) {
             $titleInfo = ' has--info info--warning';
             $titleInfoBody = 'Title is a bit short';
@@ -17,7 +17,7 @@
             $titleInfo = ' has--info info--success';
             $titleInfoBody = 'Title is a good length';
         }
-        
+
         $description = isset($data['meta_description']) ? $data['meta_description'] : $data['default_description'];
         $description = strlen($description) > 155 ? substr($description,0,155)."..." : $description;
         $descriptionInfo = isset($data['meta_description']) ? '' : ' has--info info--error';
@@ -46,7 +46,7 @@ EOT;
         $descriptionInfoBody = $data['default_og_description'] ? 'This is a default description' : 'No description added';
 
         $og_image_file = isset($data['og_image']) ? $data['og_image'] : $data['default_og_image'];
-                
+
         if((string) (int) $og_image_file === (string) $og_image_file) {
             $og_image = ee('Model')->get('File', $og_image_file)->first()->getAbsoluteURL();
         } else {
@@ -78,7 +78,7 @@ EOT;
         $descriptionInfoBody = $data['default_twitter_description'] ? 'This is a default description' : 'No description added';
 
         $twitter_image_file = isset($data['twitter_image']) ? $data['twitter_image'] : $data['default_twitter_image'];
-                
+
         if((string) (int) $twitter_image_file === (string) $twitter_image_file) {
             $twitter_image = ee('Model')->get('File', $twitter_image_file)->first()->getAbsoluteURL();
         } else {
@@ -101,7 +101,7 @@ EOT;
         </div>
 EOT;
     }
-    
+
     $languageName = isset($data['language_name']) ? $data['language_name'] : 'page not yet translated';
 ?>
 
@@ -111,9 +111,9 @@ EOT;
                 <h3 class="title-bar__title"><?=lang('audit')?> '<?=$data['title']?>' <?=isset($data['publisher']) ? '(' .  $languageName . ')' : ''?></h3>
                 <fieldset class="right title-bar__extra-tools">
                 <a href="<?= ee('CP/URL', 'publish/edit/entry/'. $data['entry_id'])?>" class="button button--secondary">Edit page <i class="button__icon fal fa-edit"></i></a>
-                </fieldset>						
+                </fieldset>
             </div>
-        </div> 
+        </div>
         <div class="panel-body">
             <?php
             if (isset($data['languages'])) :
