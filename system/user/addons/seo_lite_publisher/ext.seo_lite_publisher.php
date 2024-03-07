@@ -35,6 +35,11 @@ class Seo_lite_publisher_ext {
      */
     private $publisherSetting;
 
+    private $currentLanguageId;
+    private $defaultLanguageId;
+    private $currentStatus;
+    private $saveStatus;
+
     /**
      * @param mixed Settings array or empty string if none exist.
      */
@@ -181,7 +186,7 @@ class Seo_lite_publisher_ext {
 
 /*
         if (ee()->publisher_setting->showFallback()) {
-           
+
             $translatedWhere = [
                 'publisher_lang_id' => $langId,
                 'publisher_status' => $status,
@@ -245,8 +250,8 @@ class Seo_lite_publisher_ext {
     {
         $langId = $this->currentLanguageId;
         $status = $this->currentStatus;
-        
-        
+
+
         if ($this->publisherSetting->showFallback()) {
             /** @var CI_DB_result $q */
             $translatedWhere = [

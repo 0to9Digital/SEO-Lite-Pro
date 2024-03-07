@@ -12,6 +12,9 @@
 
 class Seo_lite_tab {
 
+    private $EE;
+    private $return_data;
+
     public function __construct()
     {
         $this->EE = get_instance();
@@ -35,7 +38,7 @@ class Seo_lite_tab {
 
         $publisher_url = ee('Addon')->get('publisher') && ee('Addon')->get('publisher')->isInstalled() ? '&publisher_id=1' : false;
         $audit_url = isset($data['publisher']) ? ee('CP/URL', 'addons/settings/seo_lite/audit_entry')->setQueryStringVariable('entry_id', $entry_id)->setQueryStringVariable('publisher_id', $publisher_url) : ee('CP/URL', 'addons/settings/seo_lite/audit_entry')->setQueryStringVariable('entry_id', $entry_id);
-        
+
         if($entry_id)
         {
             $table_name = 'seolite_content';
@@ -81,15 +84,15 @@ class Seo_lite_tab {
                 $title = $q->row('title');
                 $keywords = $q->row('keywords');
                 $description = $q->row('description');
-                $robotsdirective = $q->row('robots_directive'); 
-                $ogtitle = $q->row('og_title'); 
-                $ogdescription = $q->row('og_description'); 
-                $ogtype = $q->row('og_type'); 
-                $ogurl = $q->row('og_url'); 
-                $ogimage = $q->row('og_image'); 
-                $twittertitle = $q->row('twitter_title'); 
-                $twitterdescription = $q->row('twitter_description'); 
-                $twittertype = $q->row('twitter_type'); 
+                $robotsdirective = $q->row('robots_directive');
+                $ogtitle = $q->row('og_title');
+                $ogdescription = $q->row('og_description');
+                $ogtype = $q->row('og_type');
+                $ogurl = $q->row('og_url');
+                $ogimage = $q->row('og_image');
+                $twittertitle = $q->row('twitter_title');
+                $twitterdescription = $q->row('twitter_description');
+                $twittertype = $q->row('twitter_type');
                 $twitterimage = $q->row('twitter_image');
             }
         }
