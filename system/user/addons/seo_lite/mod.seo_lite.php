@@ -11,9 +11,11 @@
  */
 class Seo_lite {
 
-	var $return_data;
+	public $return_data;
 	private $tag_prefix;
 	private static $cache;
+
+    private $EE;
 
     public function __construct() {
         return $this->perform();
@@ -179,7 +181,7 @@ class Seo_lite {
                 $tagdata = $this->get_tagdata($seolite_entry->template);
 
                 $twitter_image_file = $this->get_preferred_value($seolite_entry->twitter_image, $default_twitter_image, $seolite_entry->default_twitter_image);
-                
+
                 if((string) (int) $twitter_image_file === (string) $twitter_image_file) {
                     $twitter_image = ee('Model')->get('File', $twitter_image_file)->first()->getAbsoluteURL();
                 } else {
@@ -188,7 +190,7 @@ class Seo_lite {
                 }
 
                 $og_image_file = $this->get_preferred_value($seolite_entry->og_image, $default_og_image, $seolite_entry->default_og_image);
-                
+
                 if((string) (int) $og_image_file === (string) $og_image_file) {
                     $og_image = ee('Model')->get('File', $og_image_file)->first()->getAbsoluteURL();
                 } else {
@@ -265,10 +267,10 @@ class Seo_lite {
             // no specific entry lookup, but we still want the config
             $q = $this->EE->db->get_where('seolite_config', array('seolite_config.site_id' => $site_id));
             $seolite_entry = $q->row();
-            
+
             $twitter_image =  $this->get_preferred_value($seolite_entry->default_twitter_image, $default_twitter_image) != '' ? ee('Model')->get('File', $this->get_preferred_value($seolite_entry->default_twitter_image, $default_twitter_image))->first()->getAbsoluteURL() : '';
             $og_image = $this->get_preferred_value($seolite_entry->default_og_image, $default_og_image) != '' ? ee('Model')->get('File', $this->get_preferred_value($seolite_entry->default_og_image, $default_og_image))->first()->getAbsoluteURL() : '';
-            
+
             $tagdata = $this->get_tagdata($seolite_entry->template);
             $tagdata = $this->clearExtraTags($tagdata);
 
@@ -358,7 +360,7 @@ class Seo_lite {
     {
         return preg_replace("~\{".$this->tag_prefix."extra:[^\}]*\}~",'', $tagdata );
     }
-    
+
     /**
      * This function will get the tagdata if SEO lite is used as a tag pair, or return back
      * the template shipped to it
@@ -444,7 +446,7 @@ class Seo_lite {
         return FALSE;
     }
 
-	private function get_request_uri() 
+	private function get_request_uri()
 	{
 		if(!isset($_SERVER['REQUEST_URI'])) {
 			$_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
@@ -466,7 +468,7 @@ class Seo_lite {
             $seolite_entry = $q->row();
             self::$cache['include_pagination_in_canonical'] = $seolite_entry->include_pagination_in_canonical;
         }
-        
+
         if(!$ignore_last_segments)
         {
             $segments = explode('/', $this->get_request_uri());
@@ -517,11 +519,11 @@ class Seo_lite {
 
             $canonical_url = $this->EE->functions->create_url($canonical_url_segments);
         }
-        
+
         if (self::$cache['include_pagination_in_canonical'] == "n") {
             $canonical_url = preg_replace("/P(\d+)$/", "", $canonical_url);
         }
-        
+
         return $canonical_url;
     }
 
@@ -627,7 +629,7 @@ class Seo_lite {
 
 	/**
      * Helper function for getting a parameter
-	 */		 
+	 */
 	private function get_param($key, $default_value = '')
 	{
 		$val = $this->EE->TMPL->fetch_param($key);
@@ -646,9 +648,9 @@ class Seo_lite {
 	 * Helper funciton for template logging
 	 */
 	private function error_log($msg)
-	{		
-		$this->EE->TMPL->log_item("seo_lite ERROR: ".$msg);		
-	}		
+	{
+		$this->EE->TMPL->log_item("seo_lite ERROR: ".$msg);
+	}
 }
 
-/* End of file mod.seo_lite.php */ 
+/* End of file mod.seo_lite.php */
