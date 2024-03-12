@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * SEO Lite (Pro) Module Front End File
@@ -9,13 +9,16 @@
  * @author     0to9 Digital - Robin Treur
  * @link       https://0to9.nl
  */
-class Seo_lite {
+class Seo_lite
+{
+    public $return_data;
+    private $tag_prefix;
+    private static $cache;
 
-	var $return_data;
-	private $tag_prefix;
-	private static $cache;
+    private $EE;
 
-    public function __construct() {
+    public function __construct()
+    {
         return $this->perform();
     }
 
@@ -50,22 +53,19 @@ class Seo_lite {
         $ignore_last_segments = $this->get_param('ignore_last_segments', FALSE);
         $category_url_title = $this->get_param('category_url_title');
 
-        $canonical_url = $this->get_param('canonical',$this->get_canonical_url($ignore_last_segments));
+        $canonical_url = $this->get_param('canonical', $this->get_canonical_url($ignore_last_segments));
 
-        if($use_last_segment)
-        {
+        if ($use_last_segment) {
             $url_title = $this->get_url_title_from_segment($ignore_last_segments);
         }
 
         $got_values = FALSE;
 
-        if($category_url_title)
-        {
+        if ($category_url_title) {
             $this->EE->db->select('cat_name, cat_description, default_keywords, default_description, default_title_postfix, default_twitter_description, default_twitter_image, default_og_image, default_og_description, template')->from('categories')->where(array('cat_url_title' => $category_url_title, 'categories.site_id' => $site_id));
             $this->EE->db->join('seolite_config', 'seolite_config.site_id = categories.site_id');
             $q = $this->EE->db->get();
-            if($q->num_rows() > 0)
-            {
+            if ($q->num_rows() > 0) {
                 $seolite_entry = $q->row();
                 $tagdata = $this->get_tagdata($seolite_entry->template);
                 $tagdata = $this->clearExtraTags($tagdata); // no {extra} values for categories for now ..
@@ -74,34 +74,28 @@ class Seo_lite {
                 $og_image = ee('Model')->get('File', $this->get_preferred_value($seolite_entry->default_og_image, $default_og_image))->first()->getAbsoluteURL();
 
                 $vars = array(
-                    $this->tag_prefix.'title' => htmlspecialchars($this->get_preferred_value($seolite_entry->cat_name, $default_title), ENT_QUOTES, 'UTF-8', FALSE), // use SEO title over original if it exists, then original, then default_title from parameter
-                    $this->tag_prefix.'meta_keywords' => htmlspecialchars($this->get_preferred_value($seolite_entry->default_keywords, $default_keywords), ENT_QUOTES, 'UTF-8', FALSE),
-                    $this->tag_prefix.'meta_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->cat_description, $seolite_entry->default_description, $default_description), ENT_QUOTES, 'UTF-8', FALSE),
-                    $this->tag_prefix.'twitter_title' => htmlspecialchars($this->get_preferred_value($seolite_entry->cat_name, $default_title), ENT_QUOTES, 'UTF-8', FALSE),
-                    $this->tag_prefix.'twitter_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->default_twitter_description, $default_twitter_description), ENT_QUOTES, 'UTF-8', FALSE),
-                    $this->tag_prefix.'twitter_image' => $twitter_image,
-                    $this->tag_prefix.'og_title' => htmlspecialchars($this->get_preferred_value($seolite_entry->cat_name, $default_title), ENT_QUOTES, 'UTF-8', FALSE),
-                    $this->tag_prefix.'og_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->default_og_description, $default_og_description), ENT_QUOTES, 'UTF-8', FALSE),
-                    $this->tag_prefix.'og_image' => $og_image,
+                    $this->tag_prefix . 'title' => htmlspecialchars($this->get_preferred_value($seolite_entry->cat_name, $default_title), ENT_QUOTES, 'UTF-8', FALSE), // use SEO title over original if it exists, then original, then default_title from parameter
+                    $this->tag_prefix . 'meta_keywords' => htmlspecialchars($this->get_preferred_value($seolite_entry->default_keywords, $default_keywords), ENT_QUOTES, 'UTF-8', FALSE),
+                    $this->tag_prefix . 'meta_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->cat_description, $seolite_entry->default_description, $default_description), ENT_QUOTES, 'UTF-8', FALSE),
+                    $this->tag_prefix . 'twitter_title' => htmlspecialchars($this->get_preferred_value($seolite_entry->cat_name, $default_title), ENT_QUOTES, 'UTF-8', FALSE),
+                    $this->tag_prefix . 'twitter_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->default_twitter_description, $default_twitter_description), ENT_QUOTES, 'UTF-8', FALSE),
+                    $this->tag_prefix . 'twitter_image' => $twitter_image,
+                    $this->tag_prefix . 'og_title' => htmlspecialchars($this->get_preferred_value($seolite_entry->cat_name, $default_title), ENT_QUOTES, 'UTF-8', FALSE),
+                    $this->tag_prefix . 'og_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->default_og_description, $default_og_description), ENT_QUOTES, 'UTF-8', FALSE),
+                    $this->tag_prefix . 'og_image' => $og_image,
                 );
 
                 $got_values = TRUE;
             }
-        }
-        else if($entry_id || $url_title)
-        {
-            if($url_title && !$entry_id)    // if we're retrieving by url_title and not entry_id
+        } else if ($entry_id || $url_title) {
+            if ($url_title && !$entry_id)    // if we're retrieving by url_title and not entry_id
             {
                 $pages = $this->EE->config->item('site_pages');
-                if(isset($pages[$site_id]) && isset($pages[$site_id]['uris']))
-                {
+                if (isset($pages[$site_id]) && isset($pages[$site_id]['uris'])) {
                     $current_uri_string = $this->EE->uri->uri_string();
-                    if($current_uri_string != '')
-                    {
-                        foreach($pages[$site_id]['uris'] as $page_entry_id => $page_uri)
-                        {
-                            if(trim($page_uri,'/') == $current_uri_string)
-                            {
+                    if ($current_uri_string != '') {
+                        foreach ($pages[$site_id]['uris'] as $page_entry_id => $page_uri) {
+                            if (trim($page_uri, '/') == $current_uri_string) {
                                 $entry_id = $page_entry_id;
                                 $url_title = FALSE; // pages will override - found entry_id so ignore url_title from now
                                 $canonical_url = $this->get_canonical_url($ignore_last_segments, $page_uri);
@@ -113,12 +107,9 @@ class Seo_lite {
 
             $table_name = 'seolite_content';
             $where = array('t.site_id' => $site_id);
-            if($url_title)
-            {
+            if ($url_title) {
                 $where['url_title'] = $url_title;
-            }
-            else
-            {
+            } else {
                 $where['t.entry_id'] = $entry_id;
             }
             // -------------------------------------------
@@ -131,21 +122,20 @@ class Seo_lite {
             //
             // May be an array containing 'table_name' (new name of table to pull from)
             // -------------------------------------------
-            if ($this->EE->extensions->active_hook('seo_lite_fetch_data') === TRUE)
-            {
+            if ($this->EE->extensions->active_hook('seo_lite_fetch_data') === TRUE) {
                 $hook_result = $this->return_data = $this->EE->extensions->call('seo_lite_fetch_data', $where, $table_name);
-                if($hook_result && isset($hook_result['table_name'])) {
+                if ($hook_result && isset($hook_result['table_name'])) {
                     $table_name = $hook_result['table_name'];
                 }
-                if($hook_result && isset($hook_result['where'])) {
+                if ($hook_result && isset($hook_result['where'])) {
                     $where = $hook_result['where'];
                 }
 
                 if ($this->EE->extensions->end_script === TRUE) return;
             }
 
-            $select_str = 't.entry_id, t.title as original_title, url_title, '.$table_name.'.title as seo_title, default_keywords, default_description, default_title_postfix, default_og_description, default_og_image, default_twitter_image, default_twitter_description, twitter_title, twitter_image, og_image, og_title, twitter_description, og_description, robots_directive, og_url, og_type, twitter_type, keywords, description, seolite_config.template';
-            if($this->EE->config->item('seolite_extra')) {
+            $select_str = 't.entry_id, t.title as original_title, url_title, ' . $table_name . '.title as seo_title, default_keywords, default_description, default_title_postfix, default_og_description, default_og_image, default_twitter_image, default_twitter_description, twitter_title, twitter_image, og_image, og_title, twitter_description, og_description, robots_directive, og_url, og_type, twitter_type, keywords, description, seolite_config.template';
+            if ($this->EE->config->item('seolite_extra')) {
                 $select_str .= ',d.*';
                 $this->EE->db->select($select_str);
 
@@ -158,11 +148,10 @@ class Seo_lite {
 
             $this->EE->db->where($where);
             $this->EE->db->join('seolite_config', 'seolite_config.site_id = t.site_id');
-            $this->EE->db->join($table_name, $table_name.'.entry_id = t.entry_id', 'left');
+            $this->EE->db->join($table_name, $table_name . '.entry_id = t.entry_id', 'left');
 
-            if ($channel !== FALSE)
-            {
-                  $this->EE->db
+            if ($channel !== FALSE) {
+                $this->EE->db
                     ->join('channels', 't.channel_id = channels.channel_id')
                     ->where('channels.channel_name', $channel);
             }
@@ -170,8 +159,7 @@ class Seo_lite {
             $q = $this->EE->db->get();
 
 
-            if($q->num_rows() > 0)
-            {
+            if ($q->num_rows() > 0) {
 
                 $seolite_entry = $q->row();
                 $entry_id = $seolite_entry->entry_id;
@@ -179,60 +167,60 @@ class Seo_lite {
                 $tagdata = $this->get_tagdata($seolite_entry->template);
 
                 $twitter_image_file = $this->get_preferred_value($seolite_entry->twitter_image, $default_twitter_image, $seolite_entry->default_twitter_image);
-                
-                if((string) (int) $twitter_image_file === (string) $twitter_image_file) {
+
+                if ((string)(int)$twitter_image_file === (string)$twitter_image_file) {
                     $twitter_image = ee('Model')->get('File', $twitter_image_file)->first()->getAbsoluteURL();
                 } else {
                     ee()->load->library('file_field');
-                    $twitter_image =  ee()->file_field->parse_string($twitter_image_file);
+                    $twitter_image = ee()->file_field->parse_string($twitter_image_file);
                 }
 
                 $og_image_file = $this->get_preferred_value($seolite_entry->og_image, $default_og_image, $seolite_entry->default_og_image);
-                
-                if((string) (int) $og_image_file === (string) $og_image_file) {
+
+                if ((string)(int)$og_image_file === (string)$og_image_file) {
                     $og_image = ee('Model')->get('File', $og_image_file)->first()->getAbsoluteURL();
                 } else {
                     ee()->load->library('file_field');
-                    $og_image =  ee()->file_field->parse_string($og_image_file);
+                    $og_image = ee()->file_field->parse_string($og_image_file);
                 }
 
                 $vars = array(
-                    $this->tag_prefix.'title' => htmlspecialchars($this->get_preferred_value($seolite_entry->seo_title, $seolite_entry->original_title, $default_title), ENT_QUOTES, 'UTF-8', FALSE), // use SEO title over original if it exists, then original, then default_title from parameter
-                    $this->tag_prefix.'meta_keywords' => htmlspecialchars($this->get_preferred_value($seolite_entry->keywords, $default_keywords, $seolite_entry->default_keywords), ENT_QUOTES, 'UTF-8', FALSE),
-                    $this->tag_prefix.'meta_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->description, $default_description, $seolite_entry->default_description), ENT_QUOTES, 'UTF-8', FALSE),
-                    $this->tag_prefix.'robots_directive' => $this->getRobotsValue($seolite_entry->robots_directive),
-                    $this->tag_prefix.'og_title' => htmlspecialchars($this->get_preferred_value($seolite_entry->og_title, $seolite_entry->original_title, $default_title), ENT_QUOTES, 'UTF-8', FALSE),
-                    $this->tag_prefix.'og_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->og_description, $default_og_description, $seolite_entry->default_og_description), ENT_QUOTES, 'UTF-8', FALSE),
-                    $this->tag_prefix.'og_url' => htmlspecialchars(property_exists($seolite_entry,'og_url') && $seolite_entry->og_url ? $seolite_entry->og_url : '',  ENT_QUOTES),
-                    $this->tag_prefix.'og_type' => $this->getOGType($seolite_entry->og_type),
-                    $this->tag_prefix.'twitter_title' => htmlspecialchars($this->get_preferred_value($seolite_entry->twitter_title, $seolite_entry->original_title, $default_title), ENT_QUOTES, 'UTF-8', FALSE),
-                    $this->tag_prefix.'twitter_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->twitter_description, $default_twitter_description, $seolite_entry->default_twitter_description), ENT_QUOTES, 'UTF-8', FALSE),
-                    $this->tag_prefix.'twitter_type' => $this->getTwitterType($seolite_entry->twitter_type),
-                    $this->tag_prefix.'twitter_image' => $twitter_image,
-                    $this->tag_prefix.'og_image' => $og_image,
+                    $this->tag_prefix . 'title' => htmlspecialchars($this->get_preferred_value($seolite_entry->seo_title, $seolite_entry->original_title, $default_title), ENT_QUOTES, 'UTF-8', FALSE), // use SEO title over original if it exists, then original, then default_title from parameter
+                    $this->tag_prefix . 'meta_keywords' => htmlspecialchars($this->get_preferred_value($seolite_entry->keywords, $default_keywords, $seolite_entry->default_keywords), ENT_QUOTES, 'UTF-8', FALSE),
+                    $this->tag_prefix . 'meta_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->description, $default_description, $seolite_entry->default_description), ENT_QUOTES, 'UTF-8', FALSE),
+                    $this->tag_prefix . 'robots_directive' => $this->getRobotsValue($seolite_entry->robots_directive),
+                    $this->tag_prefix . 'og_title' => htmlspecialchars($this->get_preferred_value($seolite_entry->og_title, $seolite_entry->original_title, $default_title), ENT_QUOTES, 'UTF-8', FALSE),
+                    $this->tag_prefix . 'og_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->og_description, $default_og_description, $seolite_entry->default_og_description), ENT_QUOTES, 'UTF-8', FALSE),
+                    $this->tag_prefix . 'og_url' => htmlspecialchars(property_exists($seolite_entry, 'og_url') && $seolite_entry->og_url ? $seolite_entry->og_url : '', ENT_QUOTES),
+                    $this->tag_prefix . 'og_type' => $this->getOGType($seolite_entry->og_type),
+                    $this->tag_prefix . 'twitter_title' => htmlspecialchars($this->get_preferred_value($seolite_entry->twitter_title, $seolite_entry->original_title, $default_title), ENT_QUOTES, 'UTF-8', FALSE),
+                    $this->tag_prefix . 'twitter_description' => htmlspecialchars($this->get_preferred_value($seolite_entry->twitter_description, $default_twitter_description, $seolite_entry->default_twitter_description), ENT_QUOTES, 'UTF-8', FALSE),
+                    $this->tag_prefix . 'twitter_type' => $this->getTwitterType($seolite_entry->twitter_type),
+                    $this->tag_prefix . 'twitter_image' => $twitter_image,
+                    $this->tag_prefix . 'og_image' => $og_image,
                 );
 
-                if($this->EE->config->item('seolite_extra')) {
+                if ($this->EE->config->item('seolite_extra')) {
                     $seolite_extra_config = $this->EE->config->item('seolite_extra');
                     $channel_id = $q->row('channel_id');
 
-                    if($channel_id && isset($seolite_extra_config[$channel_id])) {
+                    if ($channel_id && isset($seolite_extra_config[$channel_id])) {
 
-		                    $extra_info = ee('Model')->get('ChannelEntry')
-		                                                      ->filter('entry_id', $entry_id)
-		                                                      ->first();
+                        $extra_info = ee('Model')->get('ChannelEntry')
+                            ->filter('entry_id', $entry_id)
+                            ->first();
 
-                        foreach($seolite_extra_config[$channel_id] as $extra_field_name => $field_info) {
-                            $field_value_key = 'field_id_'.$field_info['field_id'];
+                        foreach ($seolite_extra_config[$channel_id] as $extra_field_name => $field_info) {
+                            $field_value_key = 'field_id_' . $field_info['field_id'];
 
                             $field_value = $extra_info->$field_value_key;
 
-                            if(isset($field_info['field_type'])) {
-                                switch($field_info['field_type']) {
+                            if (isset($field_info['field_type'])) {
+                                switch ($field_info['field_type']) {
                                     case 'text':
                                         $field_value = trim(strip_tags($field_value));
 
-                                        if(isset($field_info['max_length'])) {
+                                        if (isset($field_info['max_length'])) {
                                             $field_value = substr($field_value, 0, $field_info['max_length']) . ' ...';
                                         }
                                         $field_value = htmlentities($field_value);
@@ -248,7 +236,7 @@ class Seo_lite {
                                 }
 
                             }
-                            $vars[$this->tag_prefix.'extra:'.$extra_field_name] = $field_value;
+                            $vars[$this->tag_prefix . 'extra:' . $extra_field_name] = $field_value;
                         }
                     } else {
                         $tagdata = $this->clearExtraTags($tagdata);// extra array specified but no {extra} values for this channel so clear out those
@@ -259,57 +247,52 @@ class Seo_lite {
             }
         }
 
-        if(!$got_values)
-        {
+        if (!$got_values) {
 
             // no specific entry lookup, but we still want the config
             $q = $this->EE->db->get_where('seolite_config', array('seolite_config.site_id' => $site_id));
             $seolite_entry = $q->row();
-            
-            $twitter_image =  $this->get_preferred_value($seolite_entry->default_twitter_image, $default_twitter_image) != '' ? ee('Model')->get('File', $this->get_preferred_value($seolite_entry->default_twitter_image, $default_twitter_image))->first()->getAbsoluteURL() : '';
+
+            $twitter_image = $this->get_preferred_value($seolite_entry->default_twitter_image, $default_twitter_image) != '' ? ee('Model')->get('File', $this->get_preferred_value($seolite_entry->default_twitter_image, $default_twitter_image))->first()->getAbsoluteURL() : '';
             $og_image = $this->get_preferred_value($seolite_entry->default_og_image, $default_og_image) != '' ? ee('Model')->get('File', $this->get_preferred_value($seolite_entry->default_og_image, $default_og_image))->first()->getAbsoluteURL() : '';
-            
+
             $tagdata = $this->get_tagdata($seolite_entry->template);
             $tagdata = $this->clearExtraTags($tagdata);
 
             $vars = array(
-                $this->tag_prefix.'title' => htmlspecialchars($default_title, ENT_QUOTES, 'UTF-8', FALSE),
-                $this->tag_prefix.'meta_keywords' => htmlspecialchars($this->get_preferred_value($default_keywords ,$seolite_entry->default_keywords), ENT_QUOTES, 'UTF-8', FALSE) ,
-                $this->tag_prefix.'meta_description' => htmlspecialchars($this->get_preferred_value($default_description, $seolite_entry->default_description), ENT_QUOTES, 'UTF-8', FALSE),
-                $this->tag_prefix.'twitter_title' => htmlspecialchars($default_title, ENT_QUOTES, 'UTF-8', FALSE),
-                $this->tag_prefix.'twitter_description' => htmlspecialchars($this->get_preferred_value($default_twitter_description, $seolite_entry->default_twitter_description), ENT_QUOTES, 'UTF-8', FALSE),
-                $this->tag_prefix.'twitter_image' => $twitter_image,
-                $this->tag_prefix.'og_title' => htmlspecialchars($default_title, ENT_QUOTES, 'UTF-8', FALSE),
-                $this->tag_prefix.'og_description' => htmlspecialchars($this->get_preferred_value($default_og_description, $seolite_entry->default_og_description), ENT_QUOTES, 'UTF-8', FALSE),
-                $this->tag_prefix.'og_image' => $og_image,
+                $this->tag_prefix . 'title' => htmlspecialchars($default_title, ENT_QUOTES, 'UTF-8', FALSE),
+                $this->tag_prefix . 'meta_keywords' => htmlspecialchars($this->get_preferred_value($default_keywords, $seolite_entry->default_keywords), ENT_QUOTES, 'UTF-8', FALSE),
+                $this->tag_prefix . 'meta_description' => htmlspecialchars($this->get_preferred_value($default_description, $seolite_entry->default_description), ENT_QUOTES, 'UTF-8', FALSE),
+                $this->tag_prefix . 'twitter_title' => htmlspecialchars($default_title, ENT_QUOTES, 'UTF-8', FALSE),
+                $this->tag_prefix . 'twitter_description' => htmlspecialchars($this->get_preferred_value($default_twitter_description, $seolite_entry->default_twitter_description), ENT_QUOTES, 'UTF-8', FALSE),
+                $this->tag_prefix . 'twitter_image' => $twitter_image,
+                $this->tag_prefix . 'og_title' => htmlspecialchars($default_title, ENT_QUOTES, 'UTF-8', FALSE),
+                $this->tag_prefix . 'og_description' => htmlspecialchars($this->get_preferred_value($default_og_description, $seolite_entry->default_og_description), ENT_QUOTES, 'UTF-8', FALSE),
+                $this->tag_prefix . 'og_image' => $og_image,
             );
         }
 
-        if($vars[$this->tag_prefix.'title'] != '')
-        {
-          if ( $this->EE->TMPL->fetch_param('title_postfix', FALSE) === FALSE)
-          {
-            $title_postfix = str_replace("&nbsp;"," ",$seolite_entry->default_title_postfix);
-          }
+        if ($vars[$this->tag_prefix . 'title'] != '') {
+            if ($this->EE->TMPL->fetch_param('title_postfix', FALSE) === FALSE) {
+                $title_postfix = str_replace("&nbsp;", " ", $seolite_entry->default_title_postfix);
+            }
         }
 
-        $vars[$this->tag_prefix.'entry_title'] = $vars[$this->tag_prefix.'title'];
-        $vars[$this->tag_prefix.'title'] = $title_prefix.$vars[$this->tag_prefix.'title'].$title_postfix.($title_separator?' '.$title_separator.' ':'');
-        $vars[$this->tag_prefix.'canonical_url'] = $canonical_url;
+        $vars[$this->tag_prefix . 'entry_title'] = $vars[$this->tag_prefix . 'title'];
+        $vars[$this->tag_prefix . 'title'] = $title_prefix . $vars[$this->tag_prefix . 'title'] . $title_postfix . ($title_separator ? ' ' . $title_separator . ' ' : '');
+        $vars[$this->tag_prefix . 'canonical_url'] = $canonical_url;
 
         // special case for soft-hypen - we strip it entirely, if we were to use html_entity_decode
         // on it as well it would display in the browser title
-        $vars[$this->tag_prefix.'title'] = str_replace("&amp;shy;", "", $vars[$this->tag_prefix.'title']);
-        $vars[$this->tag_prefix.'title'] = html_entity_decode($vars[$this->tag_prefix.'title']);
+        $vars[$this->tag_prefix . 'title'] = str_replace("&amp;shy;", "", $vars[$this->tag_prefix . 'title']);
+        $vars[$this->tag_prefix . 'title'] = html_entity_decode($vars[$this->tag_prefix . 'title']);
 
         // segment variables are not parsed yet, so we do it ourselves if they are in use in the seo lite template
-        if(preg_match_all('/\{segment_(\d)\}/i', $tagdata, $matches))
-        {
+        if (preg_match_all('/\{segment_(\d)\}/i', $tagdata, $matches)) {
             $word_separator_replace = ($this->EE->config->item('word_separator') == 'underscore' ? '_' : '-');
             $tags = $matches[0];
             $segment_numbers = $matches[1];
-            for($i=0; $i < count($tags); $i++)
-            {
+            for ($i = 0; $i < count($tags); $i++) {
                 $tag = $tags[$i];
                 $segment_value = $friendly_segments ? ucfirst(str_replace($word_separator_replace, ' ', $this->EE->uri->segment($segment_numbers[$i]))) : $this->EE->uri->segment($segment_numbers[$i]);
                 $tagdata = str_replace($tag, $segment_value, $tagdata);
@@ -319,9 +302,8 @@ class Seo_lite {
         /**
          * Hard override
          */
-        if($title_override)
-        {
-            $tagdata = preg_replace("~<title>([^<]*)</title>~",'<title>'.$title_override.'</title>', $tagdata );
+        if ($title_override) {
+            $tagdata = preg_replace("~<title>([^<]*)</title>~", '<title>' . $title_override . '</title>', $tagdata);
         }
 
         $this->return_data = $this->EE->TMPL->parse_variables_row($tagdata, $vars);
@@ -340,8 +322,7 @@ class Seo_lite {
         //
         // Remember the last_call variable in case other add ons than yours use this hook: return $html.$this->EE->extensions->last_call;
         // -------------------------------------------
-        if ($this->EE->extensions->active_hook('seo_lite_template') === TRUE)
-        {
+        if ($this->EE->extensions->active_hook('seo_lite_template') === TRUE) {
             $this->return_data = $this->EE->extensions->call('seo_lite_template', $this->return_data, $vars, $this->tag_prefix, $this->EE->TMPL->tagparams, $this);
             if ($this->EE->extensions->end_script === TRUE) return;
         }
@@ -356,9 +337,9 @@ class Seo_lite {
      */
     private function clearExtraTags($tagdata)
     {
-        return preg_replace("~\{".$this->tag_prefix."extra:[^\}]*\}~",'', $tagdata );
+        return preg_replace("~\{" . $this->tag_prefix . "extra:[^\}]*\}~", '', $tagdata);
     }
-    
+
     /**
      * This function will get the tagdata if SEO lite is used as a tag pair, or return back
      * the template shipped to it
@@ -366,16 +347,15 @@ class Seo_lite {
      * @param $default_template default seo lite template
      * @return html/tagdata
      */
-    private function get_tagdata($default_template) {
+    private function get_tagdata($default_template)
+    {
         $tagdata = $this->EE->TMPL->tagdata;
-        if( empty($tagdata))
-        {
+        if (empty($tagdata)) {
             $tagdata = $default_template;
         }
 
         return $tagdata;
     }
-
 
     /**
      * Get full url to a file from {filedir_id}/blabla/file.jpeg string
@@ -384,12 +364,11 @@ class Seo_lite {
      */
     private function get_url_from_filedir_id($str)
     {
-        if (preg_match('/^{filedir_(\d+)}/', $str, $matches))
-        {
+        if (preg_match('/^{filedir_(\d+)}/', $str, $matches)) {
             $filedir_id = $matches[1];
             $this->EE->load->model('file_upload_preferences_model');
             $upload_dest_info = $this->EE->file_upload_preferences_model->get_file_upload_preferences(FALSE, $filedir_id);
-            $str = str_replace('{filedir_'.$filedir_id.'}', $upload_dest_info['url'], $str);
+            $str = str_replace('{filedir_' . $filedir_id . '}', $upload_dest_info['url'], $str);
         }
 
         return $str;
@@ -400,27 +379,22 @@ class Seo_lite {
      *
      * @return last segment
      */
-    private function get_url_title_from_segment($ignore_segments=FALSE)
+    private function get_url_title_from_segment($ignore_segments = FALSE)
     {
         $segment_count = $this->EE->uri->total_segments();
-        if(!$ignore_segments)
-        {
+        if (!$ignore_segments) {
             $last_segment_absolute = $this->EE->uri->segment($segment_count);
             $last_segment = $last_segment_absolute;
-        }
-        else
-        {
+        } else {
             $fetch_segment = $segment_count - $ignore_segments;
-            if($segment_count<1)
-            {
+            if ($segment_count < 1) {
                 $segment_count = 1;
             }
             $last_segment = $this->EE->uri->segment($fetch_segment);
         }
 
-        if($this->is_last_segment_pagination_segment())
-        {
-            $last_segment_id = $segment_count-1;
+        if ($this->is_last_segment_pagination_segment()) {
+            $last_segment_id = $segment_count - 1;
             $last_segment = $this->EE->uri->segment($last_segment_id);
         }
 
@@ -435,52 +409,48 @@ class Seo_lite {
     {
         $segment_count = $this->EE->uri->total_segments();
         $last_segment = $this->EE->uri->segment($segment_count);
-        if(substr($last_segment,0,1) == 'P') // might be a pagination page indicator
+        if (substr($last_segment, 0, 1) == 'P') // might be a pagination page indicator
         {
             $end = substr($last_segment, 1, strlen($last_segment));
-            return ((preg_match( '/^\d*$/', $end) == 1));
+            return ((preg_match('/^\d*$/', $end) == 1));
         }
 
         return FALSE;
     }
 
-	private function get_request_uri() 
-	{
-		if(!isset($_SERVER['REQUEST_URI'])) {
-			$_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
-			if($_SERVER['QUERY_STRING']) {
-				$_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
-			}
-		}
-		return $_SERVER['REQUEST_URI'];
-	}
-
+    private function get_request_uri()
+    {
+        if (!isset($_SERVER['REQUEST_URI'])) {
+            $_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
+            if ($_SERVER['QUERY_STRING']) {
+                $_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
+            }
+        }
+        return $_SERVER['REQUEST_URI'];
+    }
 
     private function get_canonical_url($ignore_last_segments, $page_uri = FALSE)
     {
         // Check if we're wanting to strip out the pagination segment from the URL
-        if ( ! isset(self::$cache['include_pagination_in_canonical']))
-        {
+        if (!isset(self::$cache['include_pagination_in_canonical'])) {
             $site_id = $this->get_param('site_id', $this->EE->config->item('site_id'));
             $q = $this->EE->db->get_where('seolite_config', array('seolite_config.site_id' => $site_id));
             $seolite_entry = $q->row();
             self::$cache['include_pagination_in_canonical'] = $seolite_entry->include_pagination_in_canonical;
         }
-        
-        if(!$ignore_last_segments)
-        {
+
+        if (!$ignore_last_segments) {
             $segments = explode('/', $this->get_request_uri());
             $segment_count = count($segments);
 
             $append_to_url = FALSE;
 
-            if($segment_count > 0)
-            {
-                $last_segment = $segments[$segment_count-1];
-                if(substr($last_segment,0,1) == 'P') // might be a pagination page indicator
+            if ($segment_count > 0) {
+                $last_segment = $segments[$segment_count - 1];
+                if (substr($last_segment, 0, 1) == 'P') // might be a pagination page indicator
                 {
                     $end = substr($last_segment, 1, strlen($last_segment));
-                    if((preg_match( '/^\d*$/', $end)) && $end > 0)  // if it's a pagination segment and the page is > 0 we append the page number
+                    if ((preg_match('/^\d*$/', $end)) && $end > 0)  // if it's a pagination segment and the page is > 0 we append the page number
                     {
                         $append_to_url = $last_segment;
                     }
@@ -491,37 +461,30 @@ class Seo_lite {
 
             // if we got a page_uri, we use that as the blueprint
 
-            if($page_uri)
-            {
-                $canonical_url = $this->EE->functions->create_url($page_uri) . (substr($page_uri, strlen($page_uri)-1) == '/' ? '/' : '');
+            if ($page_uri) {
+                $canonical_url = $this->EE->functions->create_url($page_uri) . (substr($page_uri, strlen($page_uri) - 1) == '/' ? '/' : '');
 
-                if($append_to_url)
-                {
-                    $canonical_url = $canonical_url . (substr($canonical_url, strlen($canonical_url)-1) == '/' ? $append_to_url : '/' . $append_to_url);
+                if ($append_to_url) {
+                    $canonical_url = $canonical_url . (substr($canonical_url, strlen($canonical_url) - 1) == '/' ? $append_to_url : '/' . $append_to_url);
                 }
-            }
-            else
-            {
+            } else {
                 $canonical_url = $this->EE->functions->fetch_current_uri();
             }
-        }
-        else
-        {
+        } else {
             $segs = $this->EE->uri->segment_array();
             $canonical_url_segments = '';
             $total_segments = count($segs);
-            for($i=1; $i<$total_segments && $i < ($total_segments-$ignore_last_segments); $i++)
-            {
+            for ($i = 1; $i < $total_segments && $i < ($total_segments - $ignore_last_segments); $i++) {
                 $canonical_url_segments .= $segs[$i];
             }
 
             $canonical_url = $this->EE->functions->create_url($canonical_url_segments);
         }
-        
+
         if (self::$cache['include_pagination_in_canonical'] == "n") {
             $canonical_url = preg_replace("/P(\d+)$/", "", $canonical_url);
         }
-        
+
         return $canonical_url;
     }
 
@@ -533,20 +496,19 @@ class Seo_lite {
      * @param  $val3 finally if none of the two others are available choose this
      * @return the first available value
      */
-    private function get_preferred_value($val1, $val2, $val3='')
+    private function get_preferred_value($val1, $val2, $val3 = '')
     {
-        if(!empty($val1))
-        {
+        if (!empty($val1)) {
             return $val1;
         }
-        if(!empty($val2))
-        {
+        if (!empty($val2)) {
             return $val2;
         }
         return $val3;
     }
 
-    private function getRobotsValue($value) {
+    private function getRobotsValue($value)
+    {
         switch ($value) {
             case 0:
                 return 'INDEX, FOLLOW';
@@ -565,7 +527,8 @@ class Seo_lite {
         }
     }
 
-    private function getOGType($value) {
+    private function getOGType($value)
+    {
         switch ($value) {
             case 0:
                 return 'article';
@@ -608,7 +571,8 @@ class Seo_lite {
         }
     }
 
-    private function getTwitterType($value) {
+    private function getTwitterType($value)
+    {
         switch ($value) {
             case 0:
                 return 'summary';
@@ -624,31 +588,28 @@ class Seo_lite {
         }
     }
 
-
-	/**
+    /**
      * Helper function for getting a parameter
-	 */		 
-	private function get_param($key, $default_value = '')
-	{
-		$val = $this->EE->TMPL->fetch_param($key);
+     */
+    private function get_param($key, $default_value = '')
+    {
+        $val = $this->EE->TMPL->fetch_param($key);
 
         // since EE will remove space at the beginning of a parameter people are using &nbsp; or &#32;
         // we replace these with a standard space here
-        $val = str_replace(array('&nbsp;','&#32;'), array(' ',' '), $val);
+        $val = str_replace(array('&nbsp;', '&#32;'), array(' ', ' '), $val);
 
-		if($val == '') {
-			return $default_value;
-		}
-		return $val;
-	}
+        if ($val == '') {
+            return $default_value;
+        }
+        return $val;
+    }
 
-	/**
-	 * Helper funciton for template logging
-	 */
-	private function error_log($msg)
-	{		
-		$this->EE->TMPL->log_item("seo_lite ERROR: ".$msg);		
-	}		
+    /**
+     * Helper function for template logging
+     */
+    private function error_log($msg)
+    {
+        $this->EE->TMPL->log_item("seo_lite ERROR: " . $msg);
+    }
 }
-
-/* End of file mod.seo_lite.php */ 
